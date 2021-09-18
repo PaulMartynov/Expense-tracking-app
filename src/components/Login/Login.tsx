@@ -8,6 +8,7 @@ import {
   registerByEmailAndPassword,
 } from "../../store/authReducer";
 import { ThunkProps } from "../ThunkTypes";
+import "./style.css";
 
 const mapDispatchToProps = {
   loginByEmailAndPassword,
@@ -113,7 +114,7 @@ class Login extends React.Component<
         </div>
         <p />
         <div>
-          <Button name="login" type="submit">
+          <Button name="login" type="submit" className={"login-form-btn"}>
             Вход
           </Button>
           <Button name="register" type="button" onClick={this.register}>

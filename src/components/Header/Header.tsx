@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 import { store } from "../../store/store";
 import { logout } from "../../store/authReducer";
 import { ThunkProps } from "../ThunkTypes";
-import { NavigationBar } from "../NavigationBar/NavigationBar";
+import NavigationBar from "../NavigationBar/NavigationBar";
+import "./style.css";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userName: state.auth.username,
@@ -35,26 +36,35 @@ class Header extends React.Component<
     return (
       <Container>
         <Row>
-          <Col>
+          <Col className={"navbar-panel"}>
             <NavigationBar />
           </Col>
           <Col>
             {!this.props.isAuthenticated && (
-              <div>
-                <Button variant="outline-info" onClick={this.login}>
-                  Войти
-                </Button>
-              </div>
+              <Container>
+                <Row>
+                  <Col />
+                  <Col>
+                    <Button variant="outline-info" onClick={this.login}>
+                      Войти
+                    </Button>
+                  </Col>
+                </Row>
+              </Container>
             )}
             {this.props.isAuthenticated && (
-              <div>
-                <p>
-                  {this.props.userName}{" "}
-                  <Button variant="outline-info" onClick={this.login}>
-                    Выйти
-                  </Button>
-                </p>
-              </div>
+              <Container>
+                <Row>
+                  <Col className={"user-login"}>
+                    <p>{this.props.userName}</p>
+                  </Col>
+                  <Col>
+                    <Button variant="outline-info" onClick={this.login}>
+                      Выйти
+                    </Button>
+                  </Col>
+                </Row>
+              </Container>
             )}
           </Col>
         </Row>

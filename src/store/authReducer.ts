@@ -1,9 +1,16 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  AnyAction,
+  createAsyncThunk,
+  createSlice,
+  Dispatch,
+  Reducer,
+} from "@reduxjs/toolkit";
 import {
   registerUser,
   signInWithEmailAndPassword,
   signOut,
 } from "../api/firebase/auth";
+import { appAuth } from "../api/firebase/firebase";
 
 export const loginByEmailAndPassword = createAsyncThunk<
   UserInfo,
@@ -37,11 +44,41 @@ export const logout = createAsyncThunk<unknown, unknown>(
     await signOut();
   }
 );
+export function onAuthChange(user: UserInfo): AnyAction {
+  return {
+    type: "auth/change",
+    payload: user,
+  };
+}
+
+export const onAuthChangeThunk = () => {
+  return (dispatch: Dispatch): void => {
+    appAuth.onAuthStateChanged((data) => {
+      if (data) {
+        dispatch(onAuthChange({ userId: data.uid, username: data.email }));
+      }
+    });
+  };
+};
 
 const initState: AuthState = {
   userId: null,
   username: null,
   isAuthenticated: false,
+};
+
+export const authReducer: Reducer = (state = initState, action: AnyAction) => {
+  switch (action.type) {
+    case "auth/change":
+      return {
+        ...state,
+        userId: action.payload.userId,
+        username: action.payload.username,
+        isAuthenticated: true,
+      };
+    default:
+      return state;
+  }
 };
 
 const authSlice = createSlice({
@@ -78,6 +115,8 @@ const authSlice = createSlice({
     builder.addCase(logout.fulfilled, (state) => {
       state.isAuthenticated = false;
     });
+
+    builder.addCase("auth/change", authReducer);
   },
 });
 
