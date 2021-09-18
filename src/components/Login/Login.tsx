@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Action, ThunkAction } from "@reduxjs/toolkit";
+import { Button } from "react-bootstrap";
 import { store } from "../../store/store";
 import {
   loginByEmailAndPassword,
@@ -15,21 +16,21 @@ type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-type ThunkProps<T extends { [K in keyof T]: (...a: any[]) => AppThunk }> = {
+type ThunkProps<T extends { [K in keyof T]: (...a: never) => AppThunk }> = {
   [K in keyof T]: (...args: Parameters<T[K]>) => void;
 };
 
-const dispatchThunkToProps = {
+const mapDispatchToProps = {
   loginByEmailAndPassword,
   registerByEmailAndPassword,
 };
 
-const stateToProps = (state: ReturnType<typeof store.getState>) => ({
+const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   auth: state.auth,
 });
 
-export type DispatchPropsType = ReturnType<typeof stateToProps> &
-  ThunkProps<typeof dispatchThunkToProps>;
+export type DispatchPropsType = ReturnType<typeof mapStateToProps> &
+  ThunkProps<typeof mapDispatchToProps>;
 
 class Login extends React.Component<
   DispatchPropsType,
@@ -38,7 +39,7 @@ class Login extends React.Component<
     password: string;
   }
 > {
-  constructor(props: Readonly<DispatchPropsType> | DispatchPropsType) {
+  constructor(props: DispatchPropsType) {
     super(props);
     this.state = {
       email: "",
@@ -98,24 +99,24 @@ class Login extends React.Component<
       <form onSubmit={this.login}>
         <h3>Вход</h3>
 
-        <div className="form-input-div">
+        <div className="form-group">
           <label>Логин</label>
           <input
             type="email"
             value={this.state.email}
-            className="form-input"
+            className="form-group"
             placeholder="Введите логин"
             required={true}
             onChange={this.loginInput}
           />
         </div>
 
-        <div className="form-input-div">
+        <div className="form-group">
           <label>Пароль</label>
           <input
             type="password"
             value={this.state.password}
-            className="form-input"
+            className="form-group"
             required={true}
             placeholder="Введите пароль"
             onChange={this.passwordInput}
@@ -123,18 +124,16 @@ class Login extends React.Component<
         </div>
         <p />
         <div>
-          <button name="login" type="submit">
+          <Button name="login" type="submit">
             Вход
-          </button>
-          <button name="register" type="button" onClick={this.register}>
+          </Button>
+          <Button name="register" type="button" onClick={this.register}>
             Регистрация
-          </button>
+          </Button>
         </div>
       </form>
     );
   }
 }
 
-export default connect(stateToProps, {
-  ...dispatchThunkToProps,
-})(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
