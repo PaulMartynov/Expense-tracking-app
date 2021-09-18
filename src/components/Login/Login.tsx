@@ -1,24 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { Action, ThunkAction } from "@reduxjs/toolkit";
 import { Button } from "react-bootstrap";
 import { store } from "../../store/store";
 import {
   loginByEmailAndPassword,
   registerByEmailAndPassword,
 } from "../../store/authReducer";
-
-type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  ReturnType,
-  unknown,
-  Action<string>
->;
-
-type ThunkProps<T extends { [K in keyof T]: (...a: never) => AppThunk }> = {
-  [K in keyof T]: (...args: Parameters<T[K]>) => void;
-};
+import { ThunkProps } from "../ThunkTypes";
 
 const mapDispatchToProps = {
   loginByEmailAndPassword,

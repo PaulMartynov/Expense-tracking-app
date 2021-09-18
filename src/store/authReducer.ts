@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { registerUser, signInWithEmailAndPassword } from "../api/firebase/auth";
+import {
+  registerUser,
+  signInWithEmailAndPassword,
+  signOut,
+} from "../api/firebase/auth";
 
 export const loginByEmailAndPassword = createAsyncThunk<
   UserInfo,
@@ -24,6 +28,13 @@ export const registerByEmailAndPassword = createAsyncThunk<
     const data = await registerUser(email, password);
 
     return { userId: data.user?.uid, username: data.user?.email };
+  }
+);
+
+export const logout = createAsyncThunk<unknown, unknown>(
+  "auth/logout",
+  async (): Promise<void> => {
+    await signOut();
   }
 );
 
@@ -62,6 +73,10 @@ const authSlice = createSlice({
       state.userId = action.payload.userId;
       state.username = action.payload.username;
       state.isAuthenticated = true;
+    });
+
+    builder.addCase(logout.fulfilled, (state) => {
+      state.isAuthenticated = false;
     });
   },
 });
