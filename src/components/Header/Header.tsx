@@ -34,41 +34,26 @@ class Header extends React.Component<
 
   render(): React.ReactElement {
     return (
-      <Container>
-        <Row>
-          <Col className={"navbar-panel"}>
-            <NavigationBar />
-          </Col>
-          <Col>
-            {!this.props.isAuthenticated && (
-              <Container>
-                <Row>
-                  <Col />
-                  <Col>
-                    <Button variant="outline-info" onClick={this.login}>
-                      Войти
-                    </Button>
-                  </Col>
-                </Row>
-              </Container>
-            )}
-            {this.props.isAuthenticated && (
-              <Container>
-                <Row>
-                  <Col className={"user-login"}>
-                    <p>{this.props.userName}</p>
-                  </Col>
-                  <Col>
-                    <Button variant="outline-info" onClick={this.login}>
-                      Выйти
-                    </Button>
-                  </Col>
-                </Row>
-              </Container>
-            )}
-          </Col>
-        </Row>
-      </Container>
+      <div>
+        <div className={"navbar-panel"}>
+          <NavigationBar />
+        </div>
+        {!this.props.isAuthenticated && (
+          <div className={"user-login"}>
+            <Button variant="outline-info" onClick={this.login}>
+              Войти
+            </Button>
+          </div>
+        )}
+        {this.props.isAuthenticated && (
+          <div className={"user-login"}>
+            <label>{this.props.userName}</label>
+            <Button variant="outline-info" onClick={this.login}>
+              Выйти
+            </Button>
+          </div>
+        )}
+      </div>
     );
   }
 }

@@ -1,10 +1,9 @@
 .user-login {
+  float: right;
   align-content: center;
 }
-.user-login p {
-  float: right;
-  margin: 1em 0 0;
-}
 .navbar-panel {
+  flex-wrap: wrap;
   margin-top: 5px;
+  float: left;
 }

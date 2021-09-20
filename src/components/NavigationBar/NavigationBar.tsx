@@ -12,7 +12,7 @@ export default function NavigationBar(): JSX.Element {
       </Nav.Item>
       <Nav.Item>
         <LinkContainer to="/finance">
-          <Nav.Link>Доходы/Расходы</Nav.Link>
+          <Nav.Link>Расходы/Зачисления</Nav.Link>
         </LinkContainer>
       </Nav.Item>
       <Nav.Item>
