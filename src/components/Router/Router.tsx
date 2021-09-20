@@ -9,6 +9,7 @@ import loginRequired from "./LoginRequire";
 import About from "../About/About";
 import Finance from "../Finance/Finance";
 import { onAuthChangeThunk } from "../../store/authReducer";
+import Categories from "../Categories/Categories";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   isAuthenticated: state.auth.isAuthenticated,
@@ -34,25 +35,23 @@ class Routes extends React.Component<DispatchPropsType, never> {
   render() {
     return (
       <Switch>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            component={loginRequired(MainContent, this.props.isAuthenticated)}
-          />
-          <Route
-            exact
-            path="/finance"
-            component={loginRequired(Finance, this.props.isAuthenticated)}
-          />
-          <Route
-            exact
-            path="/category"
-            component={loginRequired(Finance, this.props.isAuthenticated)}
-          />
-          <Route path="/login" component={Login} />
-          <Route path="/about" component={About} />
-        </Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/about" component={About} />
+        <Route
+          exact
+          path="/finance"
+          component={loginRequired(Finance, this.props.isAuthenticated)}
+        />
+        <Route
+          exact
+          path="/category"
+          component={loginRequired(Categories, this.props.isAuthenticated)}
+        />
+        <Route
+          exact
+          path="/"
+          component={loginRequired(MainContent, this.props.isAuthenticated)}
+        />
       </Switch>
     );
   }
