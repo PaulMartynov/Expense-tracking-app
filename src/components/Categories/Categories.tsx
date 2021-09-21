@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { store } from "../../store/store";
 import { getAllCategories, saveCategories } from "../../store/categoryReducer";
 import { ThunkProps } from "../ThunkTypes";
+import CategoryPopup from "./CategoryPopup/CategoryPopup";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userId: state.auth.userId,
@@ -23,12 +24,14 @@ class Categories extends React.Component<
   DispatchPropsType,
   {
     newCategoryName: string;
+    modalActive: boolean;
   }
 > {
   constructor(props: DispatchPropsType) {
     super(props);
     this.state = {
       newCategoryName: "",
+      modalActive: false,
     };
   }
 
@@ -52,36 +55,24 @@ class Categories extends React.Component<
     this.setState({ newCategoryName: "" });
   };
 
+  setModalActive = (): void => {
+    this.setState({ modalActive: !this.state.modalActive });
+  };
+
   render() {
     return (
       <>
         <h3>Категории операций:</h3>
-        <div className="form-group">
-          <div className="input-group mb-3">
-            <input
-              className={"form-control"}
-              onChange={this.onChangeInput}
-              type="text"
-              value={this.state.newCategoryName}
-              name="NewCategoryName"
-              required={true}
-              placeholder={"Имя категории"}
-              aria-describedby="add-category-btn"
-            />
-            <Button
-              onClick={this.addCategory}
-              id="add-category-btn"
-              disabled={
-                !(
-                  this.state.newCategoryName &&
-                  this.state.newCategoryName.length > 0
-                )
-              }
-            >
-              Добавить
-            </Button>
-          </div>
-        </div>
+        {this.state.modalActive ? (
+          <CategoryPopup
+            active={this.state.modalActive}
+            setActive={this.setModalActive}
+            children={<div />}
+          />
+        ) : null}
+        <Button onClick={this.setModalActive} id="add-category-btn">
+          Добавить
+        </Button>
       </>
     );
   }

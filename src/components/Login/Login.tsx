@@ -117,7 +117,12 @@ class Login extends React.Component<
           <Button name="login" type="submit" className={"login-form-btn"}>
             Вход
           </Button>
-          <Button name="register" type="button" onClick={this.register}>
+          <Button
+            name="register"
+            type="button"
+            className={"btn btn-secondary"}
+            onClick={this.register}
+          >
             Регистрация
           </Button>
         </div>
