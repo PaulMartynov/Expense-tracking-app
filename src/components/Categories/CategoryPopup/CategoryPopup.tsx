@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import Modal from "../../ModalComponent/Modal";
+import SubCategory from "./SubCategory";
 
 interface popupProps {
   active: boolean;
@@ -42,7 +43,12 @@ export default class CategoryPopup extends React.Component<
     const existCategory = this.state.subCategories.filter(
       (item) => item.name === this.state.subCategoryName
     );
-    if (existCategory) {
+    if (
+      existCategory.length > 0 ||
+      this.state.categoryName.length <= 0 ||
+      this.state.subCategoryName.length <= 0 ||
+      this.state.categoryName === this.state.subCategoryName
+    ) {
       return;
     }
     const subCategories = [...this.state.subCategories];
@@ -51,6 +57,12 @@ export default class CategoryPopup extends React.Component<
       name: this.state.subCategoryName,
     });
     this.setState({ subCategoryName: "", subCategories });
+  };
+
+  deleteSubCategory = (id: number): void => {
+    const subCategories = [...this.state.subCategories];
+    subCategories.splice(id, 1);
+    this.setState({ subCategories });
   };
 
   render(): JSX.Element {
@@ -67,7 +79,7 @@ export default class CategoryPopup extends React.Component<
                   type="text"
                   value={this.state.categoryName}
                   className="form-control-plaintext"
-                  placeholder="Название категории"
+                  placeholder="Введите название категории"
                   required={true}
                   onChange={this.onCategoryChange}
                 />
@@ -78,8 +90,7 @@ export default class CategoryPopup extends React.Component<
                   type="text"
                   value={this.state.subCategoryName}
                   className="form-control"
-                  placeholder="Название подкатегории"
-                  aria-label="Recipient's username"
+                  placeholder="Добавить подкатегорию"
                   aria-describedby="button-subCategory-btn"
                   onChange={this.onSubCategoryChange}
                   required={true}
@@ -93,6 +104,16 @@ export default class CategoryPopup extends React.Component<
                   Добавить
                 </Button>
               </div>
+              {this.state.subCategories.map((value, index) => (
+                <React.Fragment key={`sub-cat-${index}`}>
+                  <SubCategory
+                    id={index}
+                    name={value.name}
+                    childrens={value.children}
+                    deleteFunc={this.deleteSubCategory}
+                  />
+                </React.Fragment>
+              ))}
             </div>
             <div className="modal-footer">
               <Button className="btn btn-primary">Сохранить</Button>

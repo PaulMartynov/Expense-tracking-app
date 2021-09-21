@@ -23,7 +23,7 @@ export default function Modal(props: ModalProps): JSX.Element {
           <h5 className="modal-title">{props.title}</h5>
           <Button
             onClick={props.setActive}
-            className="btn-close"
+            className="btn-close btn-close-white"
             aria-label="Close"
           />
         </div>
