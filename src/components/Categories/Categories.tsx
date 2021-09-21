@@ -37,6 +37,14 @@ class Categories extends React.Component<
     };
   }
 
+  componentDidUpdate(prevProps: Readonly<DispatchPropsType>) {
+    if (prevProps.categoryList !== this.props.categoryList) {
+      this.setState({
+        categoryList: [...this.props.categoryList],
+      });
+    }
+  }
+
   override async componentDidMount(): Promise<void> {
     if (this.props.userId) {
       try {
