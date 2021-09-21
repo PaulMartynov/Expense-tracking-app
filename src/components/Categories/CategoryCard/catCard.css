@@ -1,0 +1,14 @@
+.category-card {
+  border: 1px solid #bbb;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  margin: 5px;
+  max-width: 70vw;
+  cursor: pointer;
+}
+.category-card-header {
+  box-shadow: 0 1px 1px #dfdfdf;
+}
+.sub-cat-children {
+  margin: 1em;
+}

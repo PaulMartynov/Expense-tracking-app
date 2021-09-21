@@ -5,6 +5,8 @@ import { store } from "../../store/store";
 import { getAllCategories, saveCategories } from "../../store/categoryReducer";
 import { ThunkProps } from "../ThunkTypes";
 import CategoryPopup from "./CategoryPopup/CategoryPopup";
+import CategoryCard from "./CategoryCard/CategoryCard";
+import "./Categories.css";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userId: state.auth.userId,
@@ -33,6 +35,19 @@ class Categories extends React.Component<
       modalActive: false,
       categoryList: [...this.props.categoryList],
     };
+  }
+
+  override async componentDidMount(): Promise<void> {
+    if (this.props.userId) {
+      try {
+        await this.props.getAllCategories(this.props.userId);
+        this.setState({
+          categoryList: [...this.props.categoryList],
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
   }
 
   addNewCategory = async (
@@ -76,9 +91,20 @@ class Categories extends React.Component<
             saveFn={this.addNewCategory}
           />
         ) : null}
-        <Button onClick={this.setModalActive} id="add-category-btn">
-          Добавить
-        </Button>
+        <div>
+          <div className={"add-category-card-btn"}>
+            <Button onClick={this.setModalActive} id="add-category-btn">
+              Добавить
+            </Button>
+          </div>
+          <div className={"categories-list"}>
+            {this.state.categoryList.map((value, index) => (
+              <React.Fragment key={`category-index-${index}`}>
+                <CategoryCard category={value} />
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
       </>
     );
   }
