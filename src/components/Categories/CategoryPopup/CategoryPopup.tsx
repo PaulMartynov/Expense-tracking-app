@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import Modal from "../../ModalComponent/Modal";
 import SubCategory from "./SubCategory";
+import "./subCat.css";
 
 interface popupProps {
   active: boolean;
@@ -112,18 +113,20 @@ export default class CategoryPopup extends React.Component<
                   Добавить
                 </Button>
               </div>
-              {this.state.subCategories.map((value, index) => (
-                <React.Fragment key={`sub-cat-${index}`}>
-                  <SubCategory
-                    id={index}
-                    name={value.name}
-                    childrens={value.children}
-                    deleteFunc={this.deleteSubCategory}
-                    addChildFn={this.addChild}
-                    deleteChildFn={this.deleteChild}
-                  />
-                </React.Fragment>
-              ))}
+              <div className={"subcategories-cards"}>
+                {this.state.subCategories.map((value, index) => (
+                  <React.Fragment key={`sub-cat-${index}`}>
+                    <SubCategory
+                      id={index}
+                      name={value.name}
+                      childrens={value.children}
+                      deleteFunc={this.deleteSubCategory}
+                      addChildFn={this.addChild}
+                      deleteChildFn={this.deleteChild}
+                    />
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
             <div className="modal-footer">
               <Button

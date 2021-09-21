@@ -55,15 +55,16 @@ export default class SubCategory extends React.Component<
     return (
       <div className="card border-primary mb-3">
         <div className="card-header">
-          <label>{this.props.name}</label>
-          <Button
-            className={"btn-danger btn-sm"}
-            onClick={() => {
-              this.props.deleteFunc(this.props.id);
-            }}
-          >
-            Удалить
-          </Button>
+          <div className="modal-header">
+            <h6 className="modal-title">{this.props.name}</h6>
+            <button
+              onClick={() => {
+                this.props.deleteFunc(this.props.id);
+              }}
+              className="btn-close btn-close-white"
+              aria-label="Close"
+            />
+          </div>
         </div>
         <div className="card-body">
           <div className="input-group mb-3">
