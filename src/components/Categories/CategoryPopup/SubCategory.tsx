@@ -6,6 +6,8 @@ interface SubCatProps {
   name: string;
   childrens: string[];
   deleteFunc: (id: number) => void;
+  addChildFn: (id: number, child: string) => void;
+  deleteChildFn: (id: number, childId: number) => void;
 }
 
 export default class SubCategory extends React.Component<
@@ -38,6 +40,7 @@ export default class SubCategory extends React.Component<
     }
     const childrens = [...this.state.childrens];
     childrens.push(this.state.childName);
+    this.props.addChildFn(this.props.id, this.state.childName);
     this.setState({ childName: "", childrens });
   };
 
@@ -45,6 +48,7 @@ export default class SubCategory extends React.Component<
     const childrens = [...this.state.childrens];
     childrens.splice(id, 1);
     this.setState({ childrens });
+    this.props.deleteChildFn(this.props.id, id);
   };
 
   render(): JSX.Element {

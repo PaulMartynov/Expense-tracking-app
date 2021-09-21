@@ -65,6 +65,18 @@ export default class CategoryPopup extends React.Component<
     this.setState({ subCategories });
   };
 
+  addChild = (id: number, child: string): void => {
+    const subCategories = [...this.state.subCategories];
+    subCategories[id].children.push(child);
+    this.setState({ subCategories });
+  };
+
+  deleteChild = (id: number, childId: number): void => {
+    const subCategories = [...this.state.subCategories];
+    subCategories[id].children.splice(childId, 1);
+    this.setState({ subCategories });
+  };
+
   render(): JSX.Element {
     return (
       <Modal
@@ -111,6 +123,8 @@ export default class CategoryPopup extends React.Component<
                     name={value.name}
                     childrens={value.children}
                     deleteFunc={this.deleteSubCategory}
+                    addChildFn={this.addChild}
+                    deleteChildFn={this.deleteChild}
                   />
                 </React.Fragment>
               ))}
