@@ -5,11 +5,15 @@ interface UserInfo {
 interface AuthState extends UserInfo {
   isAuthenticated: boolean;
 }
-interface ExpCategory {
-  mainCategory: string;
-  categoryName: string;
-}
 interface CategoryState {
   categoryList: ExpCategory[];
   isLoaded: boolean;
+}
+interface SubCategories {
+  name: string;
+  children: string[];
+}
+interface ExpCategory {
+  categoryName: string;
+  subCategoriesList: SubCategories[];
 }

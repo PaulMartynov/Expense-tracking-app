@@ -23,36 +23,41 @@ export type DispatchPropsType = ReturnType<typeof mapStateToProps> &
 class Categories extends React.Component<
   DispatchPropsType,
   {
-    newCategoryName: string;
     modalActive: boolean;
+    categoryList: ExpCategory[];
   }
 > {
   constructor(props: DispatchPropsType) {
     super(props);
     this.state = {
-      newCategoryName: "",
       modalActive: false,
+      categoryList: [...this.props.categoryList],
     };
   }
 
-  onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      newCategoryName: event.target.value,
-    });
-  };
-
-  addCategory = async (): Promise<void> => {
+  addNewCategory = async (
+    name: string,
+    childrens: SubCategories[]
+  ): Promise<void> => {
+    const exist = this.state.categoryList.filter(
+      (item) => item.categoryName === name
+    );
+    if (name.length <= 0 || exist.length > 0) {
+      return;
+    }
     const category: ExpCategory = {
-      mainCategory: this.state.newCategoryName,
-      categoryName: this.state.newCategoryName,
+      categoryName: name,
+      subCategoriesList: childrens,
     };
     if (this.props.userId) {
+      const categories = [...this.state.categoryList];
+      categories.push(category);
       await this.props.saveCategories({
         userId: this.props.userId,
-        categories: [category],
+        categories,
       });
     }
-    this.setState({ newCategoryName: "" });
+    this.setState({ modalActive: !this.state.modalActive });
   };
 
   setModalActive = (): void => {
@@ -68,6 +73,7 @@ class Categories extends React.Component<
             active={this.state.modalActive}
             setActive={this.setModalActive}
             children={<div />}
+            saveFn={this.addNewCategory}
           />
         ) : null}
         <Button onClick={this.setModalActive} id="add-category-btn">

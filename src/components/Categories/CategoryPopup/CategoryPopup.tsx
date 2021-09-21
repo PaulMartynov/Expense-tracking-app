@@ -7,11 +7,7 @@ interface popupProps {
   active: boolean;
   setActive: () => void;
   children: JSX.Element;
-}
-
-interface SubCategories {
-  name: string;
-  children: string[];
+  saveFn: (name: string, childs: SubCategories[]) => Promise<void>;
 }
 
 export default class CategoryPopup extends React.Component<
@@ -130,7 +126,17 @@ export default class CategoryPopup extends React.Component<
               ))}
             </div>
             <div className="modal-footer">
-              <Button className="btn btn-primary">Сохранить</Button>
+              <Button
+                className="btn btn-primary"
+                onClick={async () => {
+                  await this.props.saveFn(
+                    this.state.categoryName,
+                    this.state.subCategories
+                  );
+                }}
+              >
+                Сохранить
+              </Button>
               <Button
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
