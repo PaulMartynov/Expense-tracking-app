@@ -1,6 +1,5 @@
 import React from "react";
 import "./style.css";
-import { Button } from "react-bootstrap";
 
 interface ModalProps {
   active: boolean;
@@ -21,7 +20,7 @@ export default function Modal(props: ModalProps): JSX.Element {
       >
         <div className="modal-header">
           <h5 className="modal-title">{props.title}</h5>
-          <Button
+          <button
             onClick={props.setActive}
             className="btn-close btn-close-white"
             aria-label="Close"
