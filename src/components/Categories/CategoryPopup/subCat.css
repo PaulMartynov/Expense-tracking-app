@@ -2,3 +2,6 @@
   max-height: 40vh;
   overflow-y: scroll;
 }
+.cat-name {
+  font-size: 1.1em !important;
+}

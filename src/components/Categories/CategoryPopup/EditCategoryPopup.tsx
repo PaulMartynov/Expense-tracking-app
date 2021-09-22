@@ -90,14 +90,22 @@ export default class EditCategoryPopup extends React.Component<
           <>
             <div className="modal-body">
               <div className="form-group row">
-                <input
-                  type="text"
-                  value={this.state.categoryName}
-                  className="form-control-plaintext"
-                  placeholder="Введите название категории"
-                  required={true}
-                  onChange={this.onCategoryChange}
-                />
+                <label
+                  htmlFor="operation-description"
+                  className="col-sm-2 col-form-label"
+                >
+                  Имя:
+                </label>
+                <div className="col-sm-10">
+                  <input
+                    type="text"
+                    value={this.state.categoryName}
+                    className="form-control cat-name"
+                    placeholder="Введите название категории"
+                    required={true}
+                    onChange={this.onCategoryChange}
+                  />
+                </div>
               </div>
               <br />
               <div className="input-group mb-3">

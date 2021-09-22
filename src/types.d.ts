@@ -17,22 +17,17 @@ interface ExpCategory {
   categoryName: string;
   subCategoriesList: SubCategories[];
 }
-interface Transaction {
-  uuid: string;
+interface TransactionData {
   date: number;
+  type: "expense" | "income";
   amount: number;
   description: string;
   category: string;
   subcategory?: string;
   childSubCategory?: string;
 }
-interface TransactionData {
-  date: number;
-  amount: number;
-  description: string;
-  category: string;
-  subcategory?: string;
-  childSubCategory?: string;
+interface Transaction extends TransactionData {
+  uuid: string;
 }
 interface TransactionsState {
   transactionsList: Transaction[];
