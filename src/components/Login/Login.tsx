@@ -8,7 +8,7 @@ import {
   registerByEmailAndPassword,
 } from "../../store/authReducer";
 import { ThunkProps } from "../ThunkTypes";
-import "./style.css";
+import "./Login.css";
 
 const mapDispatchToProps = {
   loginByEmailAndPassword,

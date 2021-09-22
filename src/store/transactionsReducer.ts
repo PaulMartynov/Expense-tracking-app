@@ -31,8 +31,8 @@ export const getLastNUserTransactions = createAsyncThunk<
 
 const initState: TransactionsState = {
   transactionsList: [],
-  isLoaded: false,
-  isSaved: false,
+  transactionsIsLoaded: false,
+  transactionIsSaved: false,
 };
 
 const transactionsSlice = createSlice({
@@ -41,35 +41,35 @@ const transactionsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(saveTransaction.pending, (state) => {
-      state.isSaved = false;
+      state.transactionIsSaved = false;
     });
     builder.addCase(saveTransaction.rejected, (state) => {
-      state.isSaved = false;
+      state.transactionIsSaved = false;
     });
     builder.addCase(saveTransaction.fulfilled, (state) => {
-      state.isSaved = true;
+      state.transactionIsSaved = true;
     });
 
     builder.addCase(getAllUserTransactions.pending, (state) => {
-      state.isLoaded = false;
+      state.transactionsIsLoaded = false;
     });
     builder.addCase(getAllUserTransactions.rejected, (state) => {
-      state.isLoaded = false;
+      state.transactionsIsLoaded = false;
     });
     builder.addCase(getAllUserTransactions.fulfilled, (state, action) => {
       state.transactionsList = action.payload;
-      state.isLoaded = true;
+      state.transactionsIsLoaded = true;
     });
 
     builder.addCase(getLastNUserTransactions.pending, (state) => {
-      state.isLoaded = false;
+      state.transactionsIsLoaded = false;
     });
     builder.addCase(getLastNUserTransactions.rejected, (state) => {
-      state.isLoaded = false;
+      state.transactionsIsLoaded = false;
     });
     builder.addCase(getLastNUserTransactions.fulfilled, (state, action) => {
       state.transactionsList = action.payload;
-      state.isLoaded = true;
+      state.transactionsIsLoaded = true;
     });
   },
 });

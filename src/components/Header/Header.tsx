@@ -7,7 +7,7 @@ import { store } from "../../store/store";
 import { logout } from "../../store/authReducer";
 import { ThunkProps } from "../ThunkTypes";
 import NavigationBar from "../NavigationBar/NavigationBar";
-import "./style.css";
+import "./Header.css";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userName: state.auth.username,

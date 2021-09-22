@@ -76,10 +76,14 @@ class Categories extends React.Component<
     if (this.props.userId) {
       const categories = [...this.state.categoryList];
       categories.push(category);
-      await this.props.saveCategories({
-        userId: this.props.userId,
-        categories,
-      });
+      try {
+        await this.props.saveCategories({
+          userId: this.props.userId,
+          categories,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -87,10 +91,14 @@ class Categories extends React.Component<
     if (this.props.userId) {
       const categories = [...this.state.categoryList];
       categories[id] = category;
-      await this.props.saveCategories({
-        userId: this.props.userId,
-        categories,
-      });
+      try {
+        await this.props.saveCategories({
+          userId: this.props.userId,
+          categories,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -98,10 +106,14 @@ class Categories extends React.Component<
     if (this.props.userId) {
       const categories = [...this.state.categoryList];
       categories.splice(id, 1);
-      await this.props.saveCategories({
-        userId: this.props.userId,
-        categories,
-      });
+      try {
+        await this.props.saveCategories({
+          userId: this.props.userId,
+          categories,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
