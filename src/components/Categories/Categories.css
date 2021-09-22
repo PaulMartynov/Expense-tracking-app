@@ -2,7 +2,7 @@
   flex-wrap: wrap;
   margin-top: 5px;
   float: left;
-  width: 75vw;
+  width: 60vw;
   max-height: 80vh;
   overflow-y: scroll;
 }

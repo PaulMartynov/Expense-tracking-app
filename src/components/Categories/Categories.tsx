@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import { store } from "../../store/store";
 import { getAllCategories, saveCategories } from "../../store/categoryReducer";
 import { ThunkProps } from "../ThunkTypes";
-import CategoryPopup from "./CategoryPopup/CategoryPopup";
+import NewCategoryPopup from "./CategoryPopup/NewCategoryPopup";
 import CategoryCard from "./CategoryCard/CategoryCard";
 import "./Categories.css";
 
@@ -68,6 +68,7 @@ class Categories extends React.Component<
     if (name.length <= 0 || exist.length > 0) {
       return;
     }
+    this.setState({ modalActive: !this.state.modalActive });
     const category: ExpCategory = {
       categoryName: name,
       subCategoriesList: childrens,
@@ -80,7 +81,28 @@ class Categories extends React.Component<
         categories,
       });
     }
-    this.setState({ modalActive: !this.state.modalActive });
+  };
+
+  updateCategory = async (id: number, category: ExpCategory): Promise<void> => {
+    if (this.props.userId) {
+      const categories = [...this.state.categoryList];
+      categories[id] = category;
+      await this.props.saveCategories({
+        userId: this.props.userId,
+        categories,
+      });
+    }
+  };
+
+  deleteCategory = async (id: number): Promise<void> => {
+    if (this.props.userId) {
+      const categories = [...this.state.categoryList];
+      categories.splice(id, 1);
+      await this.props.saveCategories({
+        userId: this.props.userId,
+        categories,
+      });
+    }
   };
 
   setModalActive = (): void => {
@@ -90,9 +112,9 @@ class Categories extends React.Component<
   render() {
     return (
       <>
-        <h3>Категории операций:</h3>
+        <h3>Категории:</h3>
         {this.state.modalActive ? (
-          <CategoryPopup
+          <NewCategoryPopup
             active={this.state.modalActive}
             setActive={this.setModalActive}
             children={<div />}
@@ -108,7 +130,12 @@ class Categories extends React.Component<
           <div className={"categories-list"}>
             {this.state.categoryList.map((value, index) => (
               <React.Fragment key={`category-index-${index}`}>
-                <CategoryCard category={value} />
+                <CategoryCard
+                  category={value}
+                  deleteFn={this.deleteCategory}
+                  id={index}
+                  saveFn={this.updateCategory}
+                />
               </React.Fragment>
             ))}
           </div>

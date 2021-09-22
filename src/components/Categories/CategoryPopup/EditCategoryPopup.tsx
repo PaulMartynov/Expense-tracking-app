@@ -5,13 +5,15 @@ import SubCategory from "./SubCategory";
 import "./subCat.css";
 
 interface popupProps {
+  id: number;
   active: boolean;
   setActive: () => void;
-  children: JSX.Element;
-  saveFn: (name: string, childs: SubCategories[]) => Promise<void>;
+  category: ExpCategory;
+  saveFn: (id: number, category: ExpCategory) => Promise<void>;
+  deleteFn: (id: number) => Promise<void>;
 }
 
-export default class CategoryPopup extends React.Component<
+export default class EditCategoryPopup extends React.Component<
   popupProps,
   {
     categoryName: string;
@@ -22,8 +24,8 @@ export default class CategoryPopup extends React.Component<
   constructor(props: popupProps) {
     super(props);
     this.state = {
-      categoryName: "",
-      subCategories: [],
+      categoryName: this.props.category.categoryName,
+      subCategories: [...this.props.category.subCategoriesList],
       subCategoryName: "",
     };
   }
@@ -64,20 +66,24 @@ export default class CategoryPopup extends React.Component<
 
   addChild = (id: number, child: string): void => {
     const subCategories = [...this.state.subCategories];
-    subCategories[id].children.push(child);
+    const childrens = [...subCategories[id].children];
+    childrens.push(child);
+    subCategories[id] = { name: subCategories[id].name, children: childrens };
     this.setState({ subCategories });
   };
 
   deleteChild = (id: number, childId: number): void => {
     const subCategories = [...this.state.subCategories];
-    subCategories[id].children.splice(childId, 1);
+    const childrens = [...subCategories[id].children];
+    childrens.splice(childId, 1);
+    subCategories[id] = { name: subCategories[id].name, children: childrens };
     this.setState({ subCategories });
   };
 
   render(): JSX.Element {
     return (
       <Modal
-        title={"Добавить новую категорию"}
+        title={"Редактировать категорию"}
         active={this.props.active}
         setActive={this.props.setActive}
         children={
@@ -132,13 +138,21 @@ export default class CategoryPopup extends React.Component<
               <Button
                 className="btn btn-primary"
                 onClick={async () => {
-                  await this.props.saveFn(
-                    this.state.categoryName,
-                    this.state.subCategories
-                  );
+                  await this.props.saveFn(this.props.id, {
+                    categoryName: this.state.categoryName,
+                    subCategoriesList: this.state.subCategories,
+                  });
                 }}
               >
                 Сохранить
+              </Button>
+              <Button
+                className="btn btn-danger"
+                onClick={async () => {
+                  await this.props.deleteFn(this.props.id);
+                }}
+              >
+                Удалить
               </Button>
               <Button
                 className="btn btn-secondary"
