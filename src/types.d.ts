@@ -17,3 +17,12 @@ interface ExpCategory {
   categoryName: string;
   subCategoriesList: SubCategories[];
 }
+interface Transaction {
+  uuid: string;
+  date: number;
+  amount: number;
+  description: string;
+  category: string;
+  subcategory?: string;
+  childSubCategory?: string;
+}

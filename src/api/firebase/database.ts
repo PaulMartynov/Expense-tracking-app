@@ -18,3 +18,49 @@ export const getExpCategories = async (
   }
   return [];
 };
+
+export const addTransaction = async (
+  userId: string,
+  transaction: Transaction
+): Promise<boolean> => {
+  await appDb
+    .collection("transactions")
+    .doc(userId)
+    .collection("user_transactions")
+    .add(transaction);
+  return true;
+};
+
+export const getAllTransactions = async (
+  userId: string
+): Promise<Transaction[]> => {
+  const snap = await appDb
+    .collection("transactions")
+    .doc(userId)
+    .collection("user_transactions")
+    .orderBy("date")
+    .get();
+  return snap.docs.map((exp) => {
+    return {
+      ...exp.data(),
+    } as Transaction;
+  });
+};
+
+export const getLastNTransactions = async (
+  userId: string,
+  n: number
+): Promise<Transaction[]> => {
+  const snap = await appDb
+    .collection("transactions")
+    .doc(userId)
+    .collection("user_transactions")
+    .orderBy("date")
+    .limitToLast(n)
+    .get();
+  return snap.docs.map((exp) => {
+    return {
+      ...exp.data(),
+    } as Transaction;
+  });
+};
