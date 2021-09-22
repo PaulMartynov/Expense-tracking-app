@@ -26,3 +26,8 @@ interface Transaction {
   subcategory?: string;
   childSubCategory?: string;
 }
+interface TransactionsState {
+  transactionsList: Transaction[];
+  isLoaded: boolean;
+  isSaved: boolean;
+}
