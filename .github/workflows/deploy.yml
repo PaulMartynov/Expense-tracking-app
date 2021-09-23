@@ -1,0 +1,29 @@
+name: Build and Deploy
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+
+      - name: Install and Build 🔧
+        run: |
+          npm install
+          npm run build
+        env:
+          API_KEY: ${{ secrets.EXPENCE_TRACKING_API_KEY }}
+          AUTHDOMAIN: ${{ secrets.EXPENCE_TRACKING_AUTHDOMAIN }}
+          DB_URL: ${{ secrets.EXPENCE_TRACKING_DB_URL }}
+          PROJECT_ID: ${{ secrets.EXPENCE_TRACKING_PROJECT_ID }}
+          STORAGE_BUCKET: ${{ secrets.EXPENCE_TRACKING_STORAGE_BUCKET }}
+          MESSAGING_SENDER_ID: ${{ secrets.EXPENCE_TRACKING_MESSAGING_SENDER_ID }}
+          APP_ID: ${{ secrets.EXPENCE_TRACKING_APP_ID }}
+          MEASUREMENT_ID: ${{ secrets.EXPENCE_TRACKING_MEASUREMENT_ID }}
+          LOCAL_STORAGE_KEY: ${{ secrets.EXPENCE_TRACKING_LOCAL_STORAGE_KEY }}
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: dist # The folder the action should deploy.
