@@ -39,7 +39,7 @@ export default class TransactionCard extends React.Component<
         <Col className={"transaction-content"}>
           {this.props.transaction.description}
         </Col>
-        <Col>
+        <Col className={"transaction-content-categories"}>
           <span className="badge bg-primary transaction-category-card-item">
             {this.props.transaction.category}
           </span>
