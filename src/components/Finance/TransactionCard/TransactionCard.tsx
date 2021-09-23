@@ -7,6 +7,7 @@ interface TransactionCardProps {
   transaction: Transaction;
   categoryList: ExpCategory[];
   deleteFn: (uuid: string) => Promise<void>;
+  saveFn: (data: Transaction) => Promise<void>;
 }
 
 export default class TransactionCard extends React.Component<
@@ -31,6 +32,11 @@ export default class TransactionCard extends React.Component<
     await this.props.deleteFn(uuid);
   };
 
+  updateCard = async (transaction: Transaction): Promise<void> => {
+    this.setState({ isModalActive: !this.state.isModalActive });
+    await this.props.saveFn(transaction);
+  };
+
   render(): JSX.Element {
     const date = new Date(this.props.transaction.date);
     const day = `0${date.getDate()}`.slice(-2);
@@ -47,6 +53,7 @@ export default class TransactionCard extends React.Component<
             categoryList={this.props.categoryList}
             transaction={this.props.transaction}
             deleteFn={this.deleteCard}
+            saveFn={this.updateCard}
           />
         ) : null}
         <Col

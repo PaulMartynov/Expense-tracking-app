@@ -10,6 +10,7 @@ import {
   getLastNUserTransactions,
   getUsersTransactionsByDate,
   saveTransaction,
+  updateUserTransaction,
 } from "../../store/transactionsReducer";
 import { ThunkProps } from "../ThunkTypes";
 import "./Finance.css";
@@ -32,6 +33,7 @@ const mapDispatchToProps = {
   getLastNUserTransactions,
   getUsersTransactionsByDate,
   deleteUserTransaction,
+  updateUserTransaction,
 };
 
 export type DispatchPropsType = ReturnType<typeof mapStateToProps> &
@@ -129,6 +131,25 @@ class Finance extends React.Component<
     }
   };
 
+  updateTransaction = async (transaction: Transaction): Promise<void> => {
+    if (this.props.userId) {
+      try {
+        await this.props.updateUserTransaction({
+          userId: this.props.userId,
+          transaction,
+        });
+        await this.props.getAllUserTransactions({ userId: this.props.userId });
+        this.setState({
+          transactionsList: [...this.props.transactionsList].sort(
+            (a, b) => b.date - a.date
+          ),
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
   render(): JSX.Element {
     return (
       <>
@@ -155,6 +176,7 @@ class Finance extends React.Component<
                     transaction={value}
                     categoryList={this.state.categoryList}
                     deleteFn={this.deleteTransaction}
+                    saveFn={this.updateTransaction}
                   />
                 </React.Fragment>
               ))}

@@ -102,3 +102,27 @@ export const deleteTransaction = async (
   await batch.commit();
   return true;
 };
+
+export const updateTransaction = async (
+  userId: string,
+  transaction: Transaction
+): Promise<boolean> => {
+  const snap = await appDb
+    .collection("transactions")
+    .doc(userId)
+    .collection("user_transactions")
+    .where("uuid", "==", transaction.uuid)
+    .get();
+  const batch = appDb.batch();
+  snap.forEach((doc) => {
+    batch.update(doc.ref, "date", transaction.date);
+    batch.update(doc.ref, "type", transaction.type);
+    batch.update(doc.ref, "amount", transaction.amount);
+    batch.update(doc.ref, "description", transaction.description);
+    batch.update(doc.ref, "category", transaction.category);
+    batch.update(doc.ref, "subcategory", transaction.subcategory);
+    batch.update(doc.ref, "childSubCategory", transaction.childSubCategory);
+  });
+  await batch.commit();
+  return true;
+};

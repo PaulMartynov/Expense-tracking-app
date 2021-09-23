@@ -8,7 +8,7 @@ interface popupProps {
   setActive: () => void;
   categoryList: ExpCategory[];
   transaction: Transaction;
-  // saveFn: (data: TransactionData) => Promise<void>;
+  saveFn: (data: Transaction) => Promise<void>;
   deleteFn: (uuid: string) => Promise<void>;
 }
 
@@ -171,7 +171,7 @@ export default class EditTransactionPopup extends React.Component<
       Number(timeString[0]),
       Number(timeString[1])
     ).getTime();
-    const transaction: TransactionData = {
+    const transaction: Transaction = {
       description: this.state.description,
       date,
       amount: this.state.amount,
@@ -179,8 +179,9 @@ export default class EditTransactionPopup extends React.Component<
       category: this.state.category.categoryName,
       subcategory: this.state.selectedSubCat,
       childSubCategory: this.state.selectedChild,
+      uuid: this.props.transaction.uuid,
     };
-    // await this.props.saveFn(transaction);
+    await this.props.saveFn(transaction);
   };
 
   render(): JSX.Element {

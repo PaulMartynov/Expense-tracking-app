@@ -5,6 +5,7 @@ import {
   getAllTransactions,
   getLastNTransactions,
   getTransactionsByDate,
+  updateTransaction,
 } from "../api/firebase/database";
 
 export const saveTransaction = createAsyncThunk<
@@ -47,6 +48,14 @@ export const deleteUserTransaction = createAsyncThunk<
   return data;
 });
 
+export const updateUserTransaction = createAsyncThunk<
+  boolean,
+  { userId: string; transaction: Transaction }
+>("updateUserTransaction", async ({ userId, transaction }) => {
+  const data = await updateTransaction(userId, transaction);
+  return data;
+});
+
 const initState: TransactionsState = {
   transactionsList: [],
   transactionsIsLoaded: false,
@@ -65,6 +74,16 @@ const transactionsSlice = createSlice({
       state.transactionIsSaved = false;
     });
     builder.addCase(saveTransaction.fulfilled, (state) => {
+      state.transactionIsSaved = true;
+    });
+
+    builder.addCase(updateUserTransaction.pending, (state) => {
+      state.transactionIsSaved = false;
+    });
+    builder.addCase(updateUserTransaction.rejected, (state) => {
+      state.transactionIsSaved = false;
+    });
+    builder.addCase(updateUserTransaction.fulfilled, (state) => {
       state.transactionIsSaved = true;
     });
 
