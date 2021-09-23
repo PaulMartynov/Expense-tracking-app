@@ -64,7 +64,7 @@ export default class CategoryCard extends React.Component<
                     <React.Fragment
                       key={`${this.props.category.categoryName}-sub-category-id-${index}-child-${ind}`}
                     >
-                      <span className="badge rounded-pill bg-success sub-cat-children">
+                      <span className="badge bg-primary sub-cat-children">
                         {item}
                       </span>
                     </React.Fragment>

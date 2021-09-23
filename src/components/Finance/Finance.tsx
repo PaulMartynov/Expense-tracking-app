@@ -1,7 +1,7 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { store } from "../../store/store";
 import { getAllCategories } from "../../store/categoryReducer";
 import {
@@ -12,6 +12,7 @@ import {
 import { ThunkProps } from "../ThunkTypes";
 import "./Finance.css";
 import NewTransactionPopup from "./FinancePopup/NewTransactionPopup";
+import TransactionCard from "./TransactionCard/TransactionCard";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userId: state.auth.userId,
@@ -118,11 +119,13 @@ class Finance extends React.Component<
             </Button>
           </div>
           <div className={"transactions-list"}>
-            {this.state.transactionsList.map((value, index) => (
-              <React.Fragment key={`transaction-id-${index}`}>
-                <p>{value.description}</p>
-              </React.Fragment>
-            ))}
+            <Container>
+              {this.state.transactionsList.map((value, index) => (
+                <React.Fragment key={`transaction-id-${index}`}>
+                  <TransactionCard transaction={value} />
+                </React.Fragment>
+              ))}
+            </Container>
           </div>
         </div>
       </>
