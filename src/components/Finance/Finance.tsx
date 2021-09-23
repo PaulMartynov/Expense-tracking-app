@@ -16,6 +16,7 @@ import { ThunkProps } from "../ThunkTypes";
 import "./Finance.css";
 import NewTransactionPopup from "./FinancePopup/NewTransactionPopup";
 import TransactionCard from "./TransactionCard/TransactionCard";
+import TransactionsFilter from "../FilterBar/TransactionsFilter";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userId: state.auth.userId,
@@ -52,7 +53,9 @@ class Finance extends React.Component<
     this.state = {
       modalActive: false,
       categoryList: [...this.props.categoryList],
-      transactionsList: [...this.props.transactionsList],
+      transactionsList: [...this.props.transactionsList].sort(
+        (a, b) => b.date - a.date
+      ),
     };
   }
 
@@ -162,6 +165,7 @@ class Finance extends React.Component<
             saveFn={this.addNewTransaction}
           />
         ) : null}
+        <TransactionsFilter />
         <div>
           <div className={"add-transaction-card-btn"}>
             <Button onClick={this.setModalActive} id="add-category-btn">
