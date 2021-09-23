@@ -89,6 +89,10 @@ class Finance extends React.Component<
           userId: this.props.userId,
           transaction: newTransaction,
         });
+        await this.props.getAllUserTransactions({ userId: this.props.userId });
+        this.setState({
+          transactionsList: [...this.props.transactionsList],
+        });
       } catch (err) {
         console.log(err);
       }
