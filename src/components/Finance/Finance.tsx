@@ -50,9 +50,13 @@ class Finance extends React.Component<
   }
 
   componentDidUpdate(prevProps: Readonly<DispatchPropsType>) {
-    if (prevProps.categoryList !== this.props.categoryList) {
+    if (
+      prevProps.categoryList !== this.props.categoryList ||
+      prevProps.transactionsList !== this.props.transactionsList
+    ) {
       this.setState({
         categoryList: [...this.props.categoryList],
+        transactionsList: [...this.props.transactionsList],
       });
     }
   }
@@ -61,8 +65,10 @@ class Finance extends React.Component<
     if (this.props.userId) {
       try {
         await this.props.getAllCategories(this.props.userId);
+        await this.props.getAllUserTransactions({ userId: this.props.userId });
         this.setState({
           categoryList: [...this.props.categoryList],
+          transactionsList: [...this.props.transactionsList],
         });
       } catch (err) {
         console.log(err);
