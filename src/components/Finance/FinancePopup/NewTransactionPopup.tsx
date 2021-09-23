@@ -17,9 +17,11 @@ export default class NewTransactionPopup extends React.Component<
     date: string;
     time: string;
     amount: number;
-    category: string;
-    subcategory: string;
-    childSubCategory: string;
+    category: ExpCategory;
+    subcategory: SubCategories;
+    childCategories: string[];
+    selectedSubCat: string;
+    selectedChild: string;
     expense: boolean;
     income: boolean;
   }
@@ -27,17 +29,21 @@ export default class NewTransactionPopup extends React.Component<
   constructor(props: popupProps) {
     super(props);
     const date = new Date();
-    const month = `${date.getMonth() + 1}`;
     this.state = {
       description: "",
-      date: `${date.getFullYear()}-${
-        month.length === 2 ? month : `0${month}`
-      }-${date.getDate()}`,
-      time: `${date.getHours()}:${date.getMinutes()}`,
+      date: `${date.getFullYear()}-${`0${date.getMonth() + 1}`.slice(
+        -2
+      )}-${`0${date.getDate()}`.slice(-2)}`,
+      time: `${`0${date.getHours()}`.slice(-2)}:${`0${date.getMinutes()}`.slice(
+        -2
+      )}`,
       amount: 0,
-      category: "",
-      subcategory: "",
-      childSubCategory: "",
+      category: this.props.categoryList[0],
+      subcategory: this.props.categoryList[0]?.subCategoriesList[0],
+      childCategories:
+        this.props.categoryList[0]?.subCategoriesList[0]?.children,
+      selectedSubCat: "",
+      selectedChild: "",
       expense: true,
       income: false,
     };
@@ -72,6 +78,77 @@ export default class NewTransactionPopup extends React.Component<
       income: !this.state.income,
       expense: !this.state.expense,
     });
+  };
+
+  onChangeOption = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    const cat =
+      this.props.categoryList.filter(
+        (item) => item.categoryName === event.target.value
+      )[0] ?? this.props.categoryList[0];
+    this.setState({
+      category: cat,
+      subcategory: cat?.subCategoriesList[0],
+      childCategories: cat?.subCategoriesList[0]?.children,
+      selectedSubCat: "",
+      selectedChild: "",
+    });
+  };
+
+  onChangeSubCategory = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    if (this.state.category) {
+      const subCat = this.state.category.subCategoriesList.filter(
+        (item) => item.name === event.target.value
+      )[0];
+      this.setState({
+        subcategory: subCat,
+        childCategories: subCat?.children,
+        selectedSubCat: subCat.name ?? "",
+        selectedChild: "",
+      });
+    }
+  };
+
+  onChangeChild = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    this.setState({
+      selectedChild: event.target.value,
+    });
+  };
+
+  getCategories = (): JSX.Element[] => {
+    if (this.props.categoryList.length <= 0) {
+      return [
+        <option key={`category-option-no-option`}>
+          * Нет доступных категорий *
+        </option>,
+      ];
+    }
+    return this.props.categoryList.map((category, index) => (
+      <React.Fragment key={`category-option-${index}`}>
+        <option id={`category-option-${index}`}>{category.categoryName}</option>
+      </React.Fragment>
+    ));
+  };
+
+  getSubCategories = (): JSX.Element[] => {
+    if (!this.state.category) {
+      return [];
+    }
+    return this.state.category.subCategoriesList.map((subCat, ind) => (
+      <React.Fragment key={`sub-cat-option-${ind}`}>
+        <option id={`sub-cat-option-${ind}`}>{subCat.name}</option>
+      </React.Fragment>
+    ));
+  };
+
+  getSubCategoryChildrens = (): JSX.Element[] => {
+    if (!this.state.childCategories) {
+      return [];
+    }
+    return this.state.childCategories.map((item, i) => (
+      <React.Fragment key={`sub-cat-child-option-${i}`}>
+        <option id={`sub-cat-child-option-${i}`}>{item}</option>
+      </React.Fragment>
+    ));
   };
 
   render(): JSX.Element {
@@ -192,6 +269,59 @@ export default class NewTransactionPopup extends React.Component<
                       Зачисление
                     </label>
                   </div>
+                </div>
+              </div>
+              <div className="form-group row">
+                <label
+                  htmlFor="category-select"
+                  className="col-sm-2 col-form-label"
+                >
+                  Категория:
+                </label>
+                <div className="col-sm-10 operation-amount operation-type">
+                  <select
+                    className="form-control"
+                    id="category-select"
+                    onChange={this.onChangeOption}
+                  >
+                    {this.getCategories()}
+                  </select>
+                </div>
+              </div>
+              <div className="form-group row">
+                <label
+                  htmlFor="category-select"
+                  className="col-sm-2 col-form-label"
+                >
+                  Подкатегория:
+                </label>
+                <div className="col-sm-10 operation-amount operation-type">
+                  <select
+                    className="form-control"
+                    id="category-select"
+                    onChange={this.onChangeSubCategory}
+                  >
+                    <option key={`sub-category-option-no-option`} />
+                    {this.getSubCategories()}
+                  </select>
+                </div>
+              </div>
+              <div className="form-group row">
+                <label
+                  htmlFor="category-select"
+                  className="col-sm-2 col-form-label"
+                >
+                  Подкатегория-2:
+                </label>
+                <div className="col-sm-10 operation-amount operation-type">
+                  <select
+                    className="form-control"
+                    id="category-select"
+                    onChange={this.onChangeChild}
+                  >
+                    <option key={`sub-child-category-option-no-option`} />
+                    {this.getSubCategoryChildrens()}
+                  </select>
                 </div>
               </div>
             </div>

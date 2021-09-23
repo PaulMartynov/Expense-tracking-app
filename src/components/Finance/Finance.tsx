@@ -49,6 +49,27 @@ class Finance extends React.Component<
     };
   }
 
+  componentDidUpdate(prevProps: Readonly<DispatchPropsType>) {
+    if (prevProps.categoryList !== this.props.categoryList) {
+      this.setState({
+        categoryList: [...this.props.categoryList],
+      });
+    }
+  }
+
+  override async componentDidMount(): Promise<void> {
+    if (this.props.userId) {
+      try {
+        await this.props.getAllCategories(this.props.userId);
+        this.setState({
+          categoryList: [...this.props.categoryList],
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+
   setModalActive = (): void => {
     this.setState({ modalActive: !this.state.modalActive });
   };
