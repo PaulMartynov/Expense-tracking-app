@@ -64,3 +64,41 @@ export const getLastNTransactions = async (
     } as Transaction;
   });
 };
+
+export const getTransactionsByDate = async (
+  userId: string,
+  stat: number,
+  end: number
+): Promise<Transaction[]> => {
+  const snap = await appDb
+    .collection("transactions")
+    .doc(userId)
+    .collection("user_transactions")
+    .orderBy("date")
+    .where("date", ">=", stat)
+    .where("date", "<=", end)
+    .get();
+  return snap.docs.map((exp) => {
+    return {
+      ...exp.data(),
+    } as Transaction;
+  });
+};
+
+export const deleteTransaction = async (
+  userId: string,
+  uuid: string
+): Promise<boolean> => {
+  const snap = await appDb
+    .collection("transactions")
+    .doc(userId)
+    .collection("user_transactions")
+    .where("uuid", "==", uuid)
+    .get();
+  const batch = appDb.batch();
+  snap.forEach((doc) => {
+    batch.delete(doc.ref);
+  });
+  await batch.commit();
+  return true;
+};

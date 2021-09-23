@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   addTransaction,
+  deleteTransaction,
   getAllTransactions,
   getLastNTransactions,
+  getTransactionsByDate,
 } from "../api/firebase/database";
 
 export const saveTransaction = createAsyncThunk<
@@ -29,6 +31,22 @@ export const getLastNUserTransactions = createAsyncThunk<
   return data;
 });
 
+export const getUsersTransactionsByDate = createAsyncThunk<
+  Transaction[],
+  { userId: string; start: number; end: number }
+>("getUsersTransactionsByDate", async ({ userId, start, end }) => {
+  const data = await getTransactionsByDate(userId, start, end);
+  return data;
+});
+
+export const deleteUserTransaction = createAsyncThunk<
+  boolean,
+  { userId: string; uuid: string }
+>("deleteUserTransaction", async ({ userId, uuid }) => {
+  const data = await deleteTransaction(userId, uuid);
+  return data;
+});
+
 const initState: TransactionsState = {
   transactionsList: [],
   transactionsIsLoaded: false,
@@ -50,6 +68,16 @@ const transactionsSlice = createSlice({
       state.transactionIsSaved = true;
     });
 
+    builder.addCase(deleteUserTransaction.pending, (state) => {
+      state.transactionIsSaved = false;
+    });
+    builder.addCase(deleteUserTransaction.rejected, (state) => {
+      state.transactionIsSaved = false;
+    });
+    builder.addCase(deleteUserTransaction.fulfilled, (state) => {
+      state.transactionIsSaved = true;
+    });
+
     builder.addCase(getAllUserTransactions.pending, (state) => {
       state.transactionsIsLoaded = false;
     });
@@ -68,6 +96,17 @@ const transactionsSlice = createSlice({
       state.transactionsIsLoaded = false;
     });
     builder.addCase(getLastNUserTransactions.fulfilled, (state, action) => {
+      state.transactionsList = action.payload;
+      state.transactionsIsLoaded = true;
+    });
+
+    builder.addCase(getUsersTransactionsByDate.pending, (state) => {
+      state.transactionsIsLoaded = false;
+    });
+    builder.addCase(getUsersTransactionsByDate.rejected, (state) => {
+      state.transactionsIsLoaded = false;
+    });
+    builder.addCase(getUsersTransactionsByDate.fulfilled, (state, action) => {
       state.transactionsList = action.payload;
       state.transactionsIsLoaded = true;
     });

@@ -1,12 +1,14 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { store } from "../../store/store";
 import { getAllCategories } from "../../store/categoryReducer";
 import {
+  deleteUserTransaction,
   getAllUserTransactions,
   getLastNUserTransactions,
+  getUsersTransactionsByDate,
   saveTransaction,
 } from "../../store/transactionsReducer";
 import { ThunkProps } from "../ThunkTypes";
@@ -28,6 +30,8 @@ const mapDispatchToProps = {
   saveTransaction,
   getAllUserTransactions,
   getLastNUserTransactions,
+  getUsersTransactionsByDate,
+  deleteUserTransaction,
 };
 
 export type DispatchPropsType = ReturnType<typeof mapStateToProps> &
@@ -57,7 +61,9 @@ class Finance extends React.Component<
     ) {
       this.setState({
         categoryList: [...this.props.categoryList],
-        transactionsList: [...this.props.transactionsList],
+        transactionsList: [...this.props.transactionsList].sort(
+          (a, b) => b.date - a.date
+        ),
       });
     }
   }
@@ -69,7 +75,9 @@ class Finance extends React.Component<
         await this.props.getAllUserTransactions({ userId: this.props.userId });
         this.setState({
           categoryList: [...this.props.categoryList],
-          transactionsList: [...this.props.transactionsList],
+          transactionsList: [...this.props.transactionsList].sort(
+            (a, b) => b.date - a.date
+          ),
         });
       } catch (err) {
         console.log(err);
@@ -92,7 +100,28 @@ class Finance extends React.Component<
         });
         await this.props.getAllUserTransactions({ userId: this.props.userId });
         this.setState({
-          transactionsList: [...this.props.transactionsList],
+          transactionsList: [...this.props.transactionsList].sort(
+            (a, b) => b.date - a.date
+          ),
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  deleteTransaction = async (uuid: string): Promise<void> => {
+    if (this.props.userId) {
+      try {
+        await this.props.deleteUserTransaction({
+          userId: this.props.userId,
+          uuid,
+        });
+        await this.props.getAllUserTransactions({ userId: this.props.userId });
+        this.setState({
+          transactionsList: [...this.props.transactionsList].sort(
+            (a, b) => b.date - a.date
+          ),
         });
       } catch (err) {
         console.log(err);
@@ -122,7 +151,11 @@ class Finance extends React.Component<
             <Container>
               {this.state.transactionsList.map((value, index) => (
                 <React.Fragment key={`transaction-id-${index}`}>
-                  <TransactionCard transaction={value} />
+                  <TransactionCard
+                    transaction={value}
+                    categoryList={this.state.categoryList}
+                    deleteFn={this.deleteTransaction}
+                  />
                 </React.Fragment>
               ))}
             </Container>
