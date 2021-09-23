@@ -102,24 +102,34 @@ export default class NewCategoryPopup extends React.Component<
                 </div>
               </div>
               <br />
-              <div className="input-group mb-3">
-                <input
-                  type="text"
-                  value={this.state.subCategoryName}
-                  className="form-control"
-                  placeholder="Добавить подкатегорию"
-                  aria-describedby="button-subCategory-btn"
-                  onChange={this.onSubCategoryChange}
-                  required={true}
-                />
-                <Button
-                  className="btn btn-sm"
-                  type="button"
-                  id="button-subCategory-btn"
-                  onClick={this.addSubCategory}
+              <div className="form-group row">
+                <label
+                  htmlFor="operation-description"
+                  className="col-sm-2 col-form-label"
                 >
-                  Добавить
-                </Button>
+                  Подкатегория:
+                </label>
+                <div className="col-sm-10">
+                  <div className="input-group mb-3">
+                    <input
+                      type="text"
+                      value={this.state.subCategoryName}
+                      className="form-control"
+                      placeholder="Добавить подкатегорию"
+                      aria-describedby="button-subCategory-btn"
+                      onChange={this.onSubCategoryChange}
+                      required={true}
+                    />
+                    <Button
+                      className="btn btn-sm"
+                      type="button"
+                      id="button-subCategory-btn"
+                      onClick={this.addSubCategory}
+                    >
+                      Добавить
+                    </Button>
+                  </div>
+                </div>
               </div>
               <div className={"subcategories-cards"}>
                 {this.state.subCategories.map((value, index) => (

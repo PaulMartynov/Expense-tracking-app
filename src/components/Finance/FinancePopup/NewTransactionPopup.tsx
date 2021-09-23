@@ -151,6 +151,31 @@ export default class NewTransactionPopup extends React.Component<
     ));
   };
 
+  saveTransaction = async (): Promise<void> => {
+    if (this.state.description === "" || !this.state.category) {
+      return;
+    }
+    const dateString = this.state.date.split("-");
+    const timeString = this.state.time.split(":");
+    const date = new Date(
+      Number(dateString[0]),
+      Number(dateString[1]) - 1,
+      Number(dateString[2]),
+      Number(timeString[0]),
+      Number(timeString[1])
+    ).getTime();
+    const transaction: TransactionData = {
+      description: this.state.description,
+      date,
+      amount: this.state.amount,
+      type: this.state.expense ? "expense" : "income",
+      category: this.state.category.categoryName,
+      subcategory: this.state.selectedSubCat,
+      childSubCategory: this.state.selectedChild,
+    };
+    await this.props.saveFn(transaction);
+  };
+
   render(): JSX.Element {
     return (
       <Modal
@@ -326,7 +351,12 @@ export default class NewTransactionPopup extends React.Component<
               </div>
             </div>
             <div className="modal-footer">
-              <Button className="btn btn-primary">Сохранить</Button>
+              <Button
+                className="btn btn-primary"
+                onClick={this.saveTransaction}
+              >
+                Сохранить
+              </Button>
               <Button
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
