@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Col, Row } from "react-bootstrap";
 import { store } from "../../store/store";
 import { getAllCategories } from "../../store/categoryReducer";
 import {
@@ -13,6 +14,8 @@ import {
 import { ThunkProps } from "../ThunkTypes";
 import { sortTransactionsBy } from "../FilterComponent/Sort";
 import TransactionsFilter from "../FilterComponent/TransactionsFilter";
+import PyeChart from "./Charts/PyeChart";
+import ColumnChart from "./Charts/ColumnChart";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userId: state.auth.userId,
@@ -134,6 +137,35 @@ class MainContent extends React.Component<
           viewByDateFn={this.viewByDate}
         />
         <br />
+        {this.props.transactionsIsLoaded && (
+          <>
+            <Row>
+              <Col>
+                <PyeChart
+                  transactions={this.state.transactionsList.filter(
+                    (t) => t.type === "expense"
+                  )}
+                  type={"расходы"}
+                />
+              </Col>
+              <Col>
+                <PyeChart
+                  transactions={this.state.transactionsList.filter(
+                    (t) => t.type === "income"
+                  )}
+                  type={"доходы"}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <ColumnChart
+                transactions={sortTransactionsBy("DATE-FROM-OLD", [
+                  ...this.props.transactionsList,
+                ])}
+              />
+            </Row>
+          </>
+        )}
       </>
     );
   }
