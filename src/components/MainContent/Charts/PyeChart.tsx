@@ -10,7 +10,7 @@ export default function PyeChart(props: PyeChartProps): JSX.Element {
   const data = new Map<string, number>();
 
   props.transactions.forEach((t) => {
-    const name = [t.category, t.subcategory, t.childSubCategory].join(": ");
+    const name = [t.category, t.subcategory, t.childSubCategory].join(" ");
     data.set(name, (data.get(name) || 0) + t.amount);
   });
 
@@ -25,7 +25,7 @@ export default function PyeChart(props: PyeChartProps): JSX.Element {
         legend: "none",
         pieSliceText: "label",
         title: `Ваши ${props.type}:`,
-        pieStartAngle: 100,
+        pieStartAngle: 45,
       }}
       rootProps={{ "data-testid": "pyeChartId-11" }}
     />

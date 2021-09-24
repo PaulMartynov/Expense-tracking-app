@@ -50,9 +50,7 @@ class MainContent extends React.Component<
     super(props);
     this.state = {
       categoryList: [...this.props.categoryList],
-      transactionsList: sortTransactionsBy("DATE-FROM-NEW", [
-        ...this.props.transactionsList,
-      ]),
+      transactionsList: [...this.props.transactionsList],
     };
   }
 
@@ -64,9 +62,7 @@ class MainContent extends React.Component<
           n: count,
         });
         this.setState({
-          transactionsList: sortTransactionsBy("DATE-FROM-NEW", [
-            ...this.props.transactionsList,
-          ]),
+          transactionsList: [...this.props.transactionsList],
         });
       } catch (err) {
         console.log(err);
@@ -83,9 +79,7 @@ class MainContent extends React.Component<
           end: to,
         });
         this.setState({
-          transactionsList: sortTransactionsBy("DATE-FROM-NEW", [
-            ...this.props.transactionsList,
-          ]),
+          transactionsList: [...this.props.transactionsList],
         });
       } catch (err) {
         console.log(err);
@@ -100,9 +94,7 @@ class MainContent extends React.Component<
     ) {
       this.setState({
         categoryList: [...this.props.categoryList],
-        transactionsList: sortTransactionsBy("DATE-FROM-NEW", [
-          ...this.props.transactionsList,
-        ]),
+        transactionsList: [...this.props.transactionsList],
       });
     }
   }
@@ -117,9 +109,7 @@ class MainContent extends React.Component<
         });
         this.setState({
           categoryList: [...this.props.categoryList],
-          transactionsList: sortTransactionsBy("DATE-FROM-NEW", [
-            ...this.props.transactionsList,
-          ]),
+          transactionsList: [...this.props.transactionsList],
         });
       } catch (err) {
         console.log(err);
