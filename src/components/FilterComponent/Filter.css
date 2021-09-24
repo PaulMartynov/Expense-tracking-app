@@ -7,11 +7,18 @@
 .col-filter-date {
   max-width: 17vw !important;
 }
+.col-filter-date-2 {
+  max-width: 30vw !important;
+}
 .filter-count {
   float: right;
-  margin-left: 2em !important;
-  max-width: 5vw !important;
+  margin-left: 5em !important;
+  max-width: 7vw !important;
 }
 .filter-count-lbl {
   max-width: 10vw !important;
+}
+.btn-filter-count {
+  float: right;
+  max-width: 7vw !important;
 }

@@ -111,7 +111,7 @@ export default class TransactionsFilter extends React.Component<
 
   render(): JSX.Element {
     return (
-      <Container>
+      <>
         <Row>
           <Col className={"col-filter-date"}>
             <div className="form-group row">
@@ -179,29 +179,29 @@ export default class TransactionsFilter extends React.Component<
               <label htmlFor="filter-count" className="col-sm-2 col-form-label">
                 Количество:
               </label>
-              <div className="col-sm-10">
-                <div className="input-group mb-3">
-                  <input
-                    type="text"
-                    id={"filter-count"}
-                    value={this.state.count}
-                    className="form-control filter-count"
-                    onChange={this.onCountChange}
-                    required={true}
-                  />
-                  <Button
-                    className="btn"
-                    type="button"
-                    onClick={this.viewCount}
-                  >
-                    Показать
-                  </Button>
-                </div>
+              <div className="col-sm-10 filter-count">
+                <input
+                  type="text"
+                  id={"filter-count"}
+                  value={this.state.count}
+                  className="form-control"
+                  onChange={this.onCountChange}
+                  required={true}
+                />
               </div>
             </div>
           </Col>
+          <Col className={"filter-date"}>
+            <Button
+              className="btn btn-primary btn-filter-count"
+              type="button"
+              onClick={this.viewCount}
+            >
+              Показать
+            </Button>
+          </Col>
         </Row>
-      </Container>
+      </>
     );
   }
 }

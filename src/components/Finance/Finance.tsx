@@ -182,6 +182,7 @@ class Finance extends React.Component<
   render(): JSX.Element {
     return (
       <>
+        <br />
         <h3>Расходы/Зачисления:</h3>
         {this.state.modalActive ? (
           <NewTransactionPopup
@@ -195,7 +196,7 @@ class Finance extends React.Component<
           viewCountFn={this.viewLastNTransactions}
           viewByDateFn={this.viewByDate}
         />
-        <hr />
+        <br />
         <div>
           <div className={"add-transaction-card-btn"}>
             <Button onClick={this.setModalActive} id="add-category-btn">

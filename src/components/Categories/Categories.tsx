@@ -124,6 +124,7 @@ class Categories extends React.Component<
   render() {
     return (
       <>
+        <br />
         <h3>Категории:</h3>
         {this.state.modalActive ? (
           <NewCategoryPopup
