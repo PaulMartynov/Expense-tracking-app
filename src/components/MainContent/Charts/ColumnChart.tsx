@@ -30,6 +30,9 @@ export default function ColumnChart(props: ColumnChartProps): JSX.Element {
   });
 
   columnsData.push(["Дата", "Расходы", "Доходы"]);
+  if (props.transactions?.length === 0) {
+    columnsData.push(["Нет данных", 0, 0]);
+  }
   Object.keys(data).forEach((key) => {
     columnsData.push([key, data[key][0], data[key][1]]);
   });
@@ -43,7 +46,6 @@ export default function ColumnChart(props: ColumnChartProps): JSX.Element {
       data={columnsData}
       options={{
         title: "Статистика по дням",
-        chartArea: { width: "30%" },
         hAxis: {
           title: "Дата",
           minValue: 0,

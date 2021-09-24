@@ -127,6 +127,7 @@ class MainContent extends React.Component<
           viewByDateFn={this.viewByDate}
         />
         <br />
+        <br />
         {this.props.transactionsIsLoaded && (
           <>
             <Row>
@@ -150,7 +151,7 @@ class MainContent extends React.Component<
             <Row>
               <ColumnChart
                 transactions={sortTransactionsBy("DATE-FROM-OLD", [
-                  ...this.props.transactionsList,
+                  ...this.state.transactionsList,
                 ])}
               />
             </Row>

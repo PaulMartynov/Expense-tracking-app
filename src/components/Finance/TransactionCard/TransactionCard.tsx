@@ -62,7 +62,7 @@ export default class TransactionCard extends React.Component<
         <Col
           className={`transaction-content transaction-type-${this.props.transaction.type}`}
         >
-          {this.props.transaction.amount}
+          {this.props.transaction.amount.toFixed(2)}
         </Col>
         <Col className={"transaction-content"}>
           {this.props.transaction.description}
