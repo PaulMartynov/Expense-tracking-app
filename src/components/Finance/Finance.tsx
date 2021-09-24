@@ -16,7 +16,8 @@ import { ThunkProps } from "../ThunkTypes";
 import "./Finance.css";
 import NewTransactionPopup from "./FinancePopup/NewTransactionPopup";
 import TransactionCard from "./TransactionCard/TransactionCard";
-import TransactionsFilter from "../FilterBar/TransactionsFilter";
+import TransactionsFilter from "../FilterComponent/TransactionsFilter";
+import { sortTransactionsBy } from "../FilterComponent/Sort";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userId: state.auth.userId,
@@ -53,11 +54,48 @@ class Finance extends React.Component<
     this.state = {
       modalActive: false,
       categoryList: [...this.props.categoryList],
-      transactionsList: [...this.props.transactionsList].sort(
-        (a, b) => b.date - a.date
-      ),
+      transactionsList: sortTransactionsBy("DATE-FROM-NEW", [
+        ...this.props.transactionsList,
+      ]),
     };
   }
+
+  viewLastNTransactions = async (count: number): Promise<void> => {
+    if (this.props.userId) {
+      try {
+        await this.props.getLastNUserTransactions({
+          userId: this.props.userId,
+          n: count,
+        });
+        this.setState({
+          transactionsList: sortTransactionsBy("DATE-FROM-NEW", [
+            ...this.props.transactionsList,
+          ]),
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  viewByDate = async (from: number, to: number): Promise<void> => {
+    if (this.props.userId) {
+      try {
+        await this.props.getUsersTransactionsByDate({
+          userId: this.props.userId,
+          start: from,
+          end: to,
+        });
+        this.setState({
+          transactionsList: sortTransactionsBy("DATE-FROM-NEW", [
+            ...this.props.transactionsList,
+          ]),
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
   componentDidUpdate(prevProps: Readonly<DispatchPropsType>) {
     if (
@@ -66,9 +104,9 @@ class Finance extends React.Component<
     ) {
       this.setState({
         categoryList: [...this.props.categoryList],
-        transactionsList: [...this.props.transactionsList].sort(
-          (a, b) => b.date - a.date
-        ),
+        transactionsList: sortTransactionsBy("DATE-FROM-NEW", [
+          ...this.props.transactionsList,
+        ]),
       });
     }
   }
@@ -77,12 +115,15 @@ class Finance extends React.Component<
     if (this.props.userId) {
       try {
         await this.props.getAllCategories(this.props.userId);
-        await this.props.getAllUserTransactions({ userId: this.props.userId });
+        await this.props.getLastNUserTransactions({
+          userId: this.props.userId,
+          n: 20,
+        });
         this.setState({
           categoryList: [...this.props.categoryList],
-          transactionsList: [...this.props.transactionsList].sort(
-            (a, b) => b.date - a.date
-          ),
+          transactionsList: sortTransactionsBy("DATE-FROM-NEW", [
+            ...this.props.transactionsList,
+          ]),
         });
       } catch (err) {
         console.log(err);
@@ -103,12 +144,7 @@ class Finance extends React.Component<
           userId: this.props.userId,
           transaction: newTransaction,
         });
-        await this.props.getAllUserTransactions({ userId: this.props.userId });
-        this.setState({
-          transactionsList: [...this.props.transactionsList].sort(
-            (a, b) => b.date - a.date
-          ),
-        });
+        await this.viewLastNTransactions(20);
       } catch (err) {
         console.log(err);
       }
@@ -122,12 +158,7 @@ class Finance extends React.Component<
           userId: this.props.userId,
           uuid,
         });
-        await this.props.getAllUserTransactions({ userId: this.props.userId });
-        this.setState({
-          transactionsList: [...this.props.transactionsList].sort(
-            (a, b) => b.date - a.date
-          ),
-        });
+        await this.viewLastNTransactions(20);
       } catch (err) {
         console.log(err);
       }
@@ -141,12 +172,7 @@ class Finance extends React.Component<
           userId: this.props.userId,
           transaction,
         });
-        await this.props.getAllUserTransactions({ userId: this.props.userId });
-        this.setState({
-          transactionsList: [...this.props.transactionsList].sort(
-            (a, b) => b.date - a.date
-          ),
-        });
+        await this.viewLastNTransactions(20);
       } catch (err) {
         console.log(err);
       }
@@ -165,7 +191,11 @@ class Finance extends React.Component<
             saveFn={this.addNewTransaction}
           />
         ) : null}
-        <TransactionsFilter />
+        <TransactionsFilter
+          viewCountFn={this.viewLastNTransactions}
+          viewByDateFn={this.viewByDate}
+        />
+        <hr />
         <div>
           <div className={"add-transaction-card-btn"}>
             <Button onClick={this.setModalActive} id="add-category-btn">

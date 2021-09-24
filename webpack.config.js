@@ -8,33 +8,22 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = (env) => {
+  const plugins = [
+    new HtmlWebpackPlugin({
+      template: "public/index.html",
+      inject: "body",
+    }),
+    new Dotenv({
+      safe: true,
+      path: path.resolve(__dirname, ".env"),
+    }),
+  ];
   const babelLoaderOptions = {
     presets: ["@babel/preset-env"],
   };
   if (env.production) {
     babelLoaderOptions.plugins = ["babel-plugin-jsx-remove-data-test-id"];
-  }
-  return {
-    entry: "./src/index.tsx",
-    resolve: {
-      extensions: [".js", ".ts", ".tsx"],
-    },
-    output: {
-      filename: "script.js",
-      path: path.resolve(__dirname, "dist"),
-      environment: {
-        arrowFunction: false,
-      },
-    },
-    plugins: [
-      new HtmlWebpackPlugin({
-        template: "public/index.html",
-        inject: "body",
-      }),
-      new Dotenv({
-        safe: true,
-        path: path.resolve(__dirname, ".env"),
-      }),
+    plugins.push(
       new webpack.DefinePlugin({
         "process.env.API_KEY": JSON.stringify(process.env.API_KEY),
         "process.env.AUTHDOMAIN": JSON.stringify(process.env.AUTHDOMAIN),
@@ -53,8 +42,22 @@ module.exports = (env) => {
         "process.env.LOCAL_STORAGE_KEY": JSON.stringify(
           process.env.LOCAL_STORAGE_KEY
         ),
-      }),
-    ],
+      })
+    );
+  }
+  return {
+    entry: "./src/index.tsx",
+    resolve: {
+      extensions: [".js", ".ts", ".tsx"],
+    },
+    output: {
+      filename: "script.js",
+      path: path.resolve(__dirname, "dist"),
+      environment: {
+        arrowFunction: false,
+      },
+    },
+    plugins,
     module: {
       rules: [
         {
