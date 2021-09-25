@@ -1,9 +1,11 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import "./Filter.css";
+import { filterCategoriesByText, filterTransactionsByText } from "./Filter";
 
 interface FilterProps {
   categoryList: ExpCategory[];
+  resetFilter: () => void;
   transactionsList?: Transaction[];
   filterTransactions?: (list: Transaction[]) => void;
   filterCategories?: (list: ExpCategory[]) => void;
@@ -21,9 +23,23 @@ export default class CategoryFilter extends React.Component<
     super(props);
     this.state = {
       dropActive: false,
-      categorySelected: [],
+      categorySelected: [...this.props.categoryList],
       filterValue: "",
     };
+  }
+
+  componentDidMount(): void {
+    this.setState({
+      categorySelected: [...this.props.categoryList],
+    });
+  }
+
+  componentDidUpdate(prevProps: Readonly<FilterProps>): void {
+    if (prevProps.categoryList !== this.props.categoryList) {
+      this.setState({
+        categorySelected: [...this.props.categoryList],
+      });
+    }
   }
 
   showCategoryList = (): void => {
@@ -43,13 +59,42 @@ export default class CategoryFilter extends React.Component<
         });
       });
     });
-    return count > 0 ? `${count}` : "все";
+    return `${count}`;
   };
 
   onFilterChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const filteredCategories = filterCategoriesByText(
+      event.target.value,
+      this.props.categoryList
+    );
+
     this.setState({
       filterValue: event.target.value,
+      categorySelected: filteredCategories,
     });
+
+    if (
+      this.props.transactionsList &&
+      this.props.transactionsList?.length > 0 &&
+      this.props.filterTransactions
+    ) {
+      this.props.filterTransactions(
+        filterTransactionsByText(
+          event.target.value,
+          this.props.transactionsList
+        )
+      );
+    }
+
+    if (this.props.filterCategories) {
+      this.props.filterCategories(filteredCategories);
+    }
+  };
+
+  onKeyUp = (): void => {
+    if (this.state.filterValue === "") {
+      this.props.resetFilter();
+    }
   };
 
   render(): JSX.Element {
@@ -80,6 +125,7 @@ export default class CategoryFilter extends React.Component<
                 id="categorySearch"
                 value={this.state.filterValue}
                 onChange={this.onFilterChange}
+                onKeyUp={this.onKeyUp}
               />
             </div>
           </div>

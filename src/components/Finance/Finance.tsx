@@ -186,6 +186,14 @@ class Finance extends React.Component<
     });
   };
 
+  resetFilter = (): void => {
+    this.setState({
+      transactionsList: sortTransactionsBy("DATE-FROM-NEW", [
+        ...this.props.transactionsList,
+      ]),
+    });
+  };
+
   render(): JSX.Element {
     return (
       <>
@@ -208,6 +216,7 @@ class Finance extends React.Component<
           categoryList={this.props.categoryList}
           transactionsList={this.state.transactionsList}
           filterTransactions={this.filterTransactions}
+          resetFilter={this.resetFilter}
         />
         <br />
         <div>

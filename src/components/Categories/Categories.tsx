@@ -118,6 +118,18 @@ class Categories extends React.Component<
     }
   };
 
+  filterCategory = (list: ExpCategory[]): void => {
+    this.setState({
+      categoryList: [...list],
+    });
+  };
+
+  resetFilter = (): void => {
+    this.setState({
+      categoryList: [...this.props.categoryList],
+    });
+  };
+
   setModalActive = (): void => {
     this.setState({ modalActive: !this.state.modalActive });
   };
@@ -136,7 +148,11 @@ class Categories extends React.Component<
           />
         ) : null}
         <br />
-        <CategoryFilter categoryList={this.props.categoryList} />
+        <CategoryFilter
+          categoryList={this.props.categoryList}
+          resetFilter={this.resetFilter}
+          filterCategories={this.filterCategory}
+        />
         <br />
         <div>
           <div className={"add-category-card-btn"}>
