@@ -182,7 +182,7 @@ class Finance extends React.Component<
 
   filterTransactions = (list: Transaction[]): void => {
     this.setState({
-      transactionsList: [...list],
+      transactionsList: list,
     });
   };
 
@@ -214,7 +214,7 @@ class Finance extends React.Component<
         <br />
         <CategoryFilter
           categoryList={this.props.categoryList}
-          transactionsList={this.state.transactionsList}
+          transactionsList={this.props.transactionsList}
           filterTransactions={this.filterTransactions}
           resetFilter={this.resetFilter}
         />

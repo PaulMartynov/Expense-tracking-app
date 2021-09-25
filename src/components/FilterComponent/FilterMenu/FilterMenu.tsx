@@ -59,24 +59,11 @@ export default class FilterMenu extends React.Component<
     const checkedList = { ...this.state.checkedList };
     const check = !this.state.checkedList[target];
 
-    if (!check) {
-      Object.keys(checkedList).forEach((k) => {
-        if (k.startsWith(target)) {
-          checkedList[k] = check;
-        }
-      });
-    }
-
-    const subs = target.split(" ");
-    if (check && subs.length > 1) {
-      if (subs.length === 3) {
-        checkedList[`${subs[0]} ${subs[1]}`] = check;
-        checkedList[subs[0]] = check;
+    Object.keys(checkedList).forEach((k) => {
+      if (k.startsWith(target)) {
+        checkedList[k] = check;
       }
-      if (subs.length === 2) {
-        checkedList[subs[0]] = check;
-      }
-    }
+    });
 
     checkedList[target] = !this.state.checkedList[target];
     this.setState({

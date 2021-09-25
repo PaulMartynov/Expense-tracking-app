@@ -4,6 +4,7 @@ import "./Filter.css";
 import {
   filterCategories,
   filterCategoriesByText,
+  filterTransactionsByCheckList,
   filterTransactionsByText,
 } from "./Filter";
 import FilterMenu from "./FilterMenu/FilterMenu";
@@ -107,8 +108,26 @@ export default class CategoryFilter extends React.Component<
   };
 
   updateTransactionList = (list: CheckedList): void => {
+    this.props.resetFilter();
+    if (
+      this.props.transactionsList &&
+      this.props.transactionsList?.length > 0 &&
+      this.props.filterTransactions
+    ) {
+      this.props.filterTransactions(
+        filterTransactionsByCheckList(list, this.props.transactionsList)
+      );
+    }
+
+    if (this.props.filterCategories) {
+      this.props.filterCategories(
+        filterCategories(list, this.props.categoryList)
+      );
+    }
+
     this.setState({
       filterValue: "",
+      categorySelected: list,
     });
   };
 
@@ -121,7 +140,7 @@ export default class CategoryFilter extends React.Component<
               className="list-group-item d-flex justify-content-between align-items-center"
               onClick={this.showCategoryList}
             >
-              Категории
+              Фильтр
               <span className="badge bg-primary rounded-pill">
                 {this.countSelected()}
               </span>

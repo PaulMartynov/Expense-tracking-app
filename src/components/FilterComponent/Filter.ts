@@ -98,3 +98,22 @@ export function allChecked(checked: CheckedList): boolean {
   }
   return true;
 }
+
+export function filterTransactionsByCheckList(
+  checked: CheckedList,
+  transactions: Transaction[]
+): Transaction[] {
+  const filtered: Transaction[] = [];
+  transactions.forEach((t) => {
+    if (checked[t.category]) {
+      filtered.push(t);
+    } else if (checked[`${t.category} ${t.subcategory}`]) {
+      filtered.push(t);
+    } else if (
+      checked[`${t.category} ${t.subcategory} ${t.childSubCategory}`]
+    ) {
+      filtered.push(t);
+    }
+  });
+  return filtered;
+}

@@ -14,6 +14,9 @@ export default function PyeChart(props: PyeChartProps): JSX.Element {
     data.set(name, (data.get(name) || 0) + t.amount);
     amount += t.amount;
   });
+  if (!props.transactions || props.transactions.length <= 0) {
+    data.set("Нет данных", 0);
+  }
 
   return (
     <>

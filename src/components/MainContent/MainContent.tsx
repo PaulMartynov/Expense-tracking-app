@@ -144,7 +144,7 @@ class MainContent extends React.Component<
         <br />
         <CategoryFilter
           categoryList={this.props.categoryList}
-          transactionsList={this.state.transactionsList}
+          transactionsList={this.props.transactionsList}
           filterTransactions={this.filterTransactions}
           resetFilter={this.resetFilter}
         />
