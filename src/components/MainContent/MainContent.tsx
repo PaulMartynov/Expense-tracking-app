@@ -16,6 +16,7 @@ import { sortTransactionsBy } from "../FilterComponent/Sort";
 import TransactionsFilter from "../FilterComponent/TransactionsFilter";
 import PyeChart from "./Charts/PyeChart";
 import ColumnChart from "./Charts/ColumnChart";
+import CategoryFilter from "../FilterComponent/CategoryFilter";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userId: state.auth.userId,
@@ -117,6 +118,12 @@ class MainContent extends React.Component<
     }
   }
 
+  filterTransactions = (list: Transaction[]): void => {
+    this.setState({
+      transactionsList: [...list],
+    });
+  };
+
   render(): JSX.Element {
     return (
       <>
@@ -125,6 +132,12 @@ class MainContent extends React.Component<
         <TransactionsFilter
           viewCountFn={this.viewLastNTransactions}
           viewByDateFn={this.viewByDate}
+        />
+        <br />
+        <CategoryFilter
+          categoryList={this.props.categoryList}
+          transactionsList={this.state.transactionsList}
+          filterTransactions={this.filterTransactions}
         />
         <br />
         <br />

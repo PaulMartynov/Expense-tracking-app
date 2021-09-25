@@ -39,7 +39,7 @@ export default function ColumnChart(props: ColumnChartProps): JSX.Element {
 
   return (
     <Chart
-      width={"80vw"}
+      width={"70vw"}
       height={"600px"}
       chartType="ColumnChart"
       loader={<div>Loading Chart</div>}

@@ -18,6 +18,7 @@ import NewTransactionPopup from "./FinancePopup/NewTransactionPopup";
 import TransactionCard from "./TransactionCard/TransactionCard";
 import TransactionsFilter from "../FilterComponent/TransactionsFilter";
 import { sortTransactionsBy } from "../FilterComponent/Sort";
+import CategoryFilter from "../FilterComponent/CategoryFilter";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userId: state.auth.userId,
@@ -179,6 +180,12 @@ class Finance extends React.Component<
     }
   };
 
+  filterTransactions = (list: Transaction[]): void => {
+    this.setState({
+      transactionsList: [...list],
+    });
+  };
+
   render(): JSX.Element {
     return (
       <>
@@ -195,6 +202,12 @@ class Finance extends React.Component<
         <TransactionsFilter
           viewCountFn={this.viewLastNTransactions}
           viewByDateFn={this.viewByDate}
+        />
+        <br />
+        <CategoryFilter
+          categoryList={this.props.categoryList}
+          transactionsList={this.state.transactionsList}
+          filterTransactions={this.filterTransactions}
         />
         <br />
         <div>

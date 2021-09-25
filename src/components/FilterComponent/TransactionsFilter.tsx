@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import "./Filter.css";
 
 interface FilterProps {
@@ -172,7 +172,7 @@ export default class TransactionsFilter extends React.Component<
             </div>
           </Col>
           <Col className={"filter-date"} onClick={this.viewByDate}>
-            <Button>Найти</Button>
+            <Button>Показать</Button>
           </Col>
           <Col>
             <div className="form-group row">

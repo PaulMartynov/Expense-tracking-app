@@ -21,3 +21,6 @@
 .btn-filter-count {
   float: right;
 }
+.list-group {
+  cursor: pointer;
+}
