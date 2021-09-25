@@ -1,7 +1,12 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import "./Filter.css";
-import { filterCategoriesByText, filterTransactionsByText } from "./Filter";
+import {
+  filterCategories,
+  filterCategoriesByText,
+  filterTransactionsByText,
+} from "./Filter";
+import FilterMenu from "./FilterMenu/FilterMenu";
 
 interface FilterProps {
   categoryList: ExpCategory[];
@@ -14,52 +19,54 @@ interface FilterProps {
 export default class CategoryFilter extends React.Component<
   FilterProps,
   {
-    dropActive: boolean;
-    categorySelected: ExpCategory[];
+    modalActive: boolean;
+    categorySelected: CheckedList;
     filterValue: string;
   }
 > {
   constructor(props: FilterProps) {
     super(props);
     this.state = {
-      dropActive: false,
-      categorySelected: [...this.props.categoryList],
+      modalActive: false,
       filterValue: "",
+      categorySelected: filterCategoriesByText("", this.props.categoryList),
     };
   }
 
+  countSelected = (): number => {
+    let count = 0;
+    Object.keys(this.state.categorySelected).forEach((key) => {
+      if (this.state.categorySelected[key]) {
+        count += 1;
+      }
+    });
+    return count;
+  };
+
   componentDidMount(): void {
     this.setState({
-      categorySelected: [...this.props.categoryList],
+      categorySelected: filterCategoriesByText(
+        this.state.filterValue,
+        this.props.categoryList
+      ),
     });
   }
 
   componentDidUpdate(prevProps: Readonly<FilterProps>): void {
     if (prevProps.categoryList !== this.props.categoryList) {
       this.setState({
-        categorySelected: [...this.props.categoryList],
+        categorySelected: filterCategoriesByText(
+          this.state.filterValue,
+          this.props.categoryList
+        ),
       });
     }
   }
 
   showCategoryList = (): void => {
     this.setState({
-      dropActive: !this.state.dropActive,
+      modalActive: !this.state.modalActive,
     });
-  };
-
-  categoriesSelected = (): string => {
-    let count = 0;
-    this.state.categorySelected.forEach((cat) => {
-      count += 1;
-      cat.subCategoriesList.forEach((subcat) => {
-        count += 1;
-        subcat.children.forEach(() => {
-          count += 1;
-        });
-      });
-    });
-    return `${count}`;
   };
 
   onFilterChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -87,7 +94,9 @@ export default class CategoryFilter extends React.Component<
     }
 
     if (this.props.filterCategories) {
-      this.props.filterCategories(filteredCategories);
+      this.props.filterCategories(
+        filterCategories(filteredCategories, this.props.categoryList)
+      );
     }
   };
 
@@ -97,20 +106,35 @@ export default class CategoryFilter extends React.Component<
     }
   };
 
+  updateTransactionList = (list: CheckedList): void => {
+    this.setState({
+      filterValue: "",
+    });
+  };
+
   render(): JSX.Element {
     return (
       <Row>
-        <Col className={"col-filter-date"}>
-          <ul className="list-group">
+        <Col className={"col-filter-check"}>
+          <ul className="list-group nav nav-tabs">
             <li
               className="list-group-item d-flex justify-content-between align-items-center"
               onClick={this.showCategoryList}
             >
               Категории
               <span className="badge bg-primary rounded-pill">
-                {this.categoriesSelected()}
+                {this.countSelected()}
               </span>
             </li>
+            {this.state.modalActive ? (
+              <FilterMenu
+                active={this.state.modalActive}
+                setActive={this.showCategoryList}
+                updateFn={this.updateTransactionList}
+                categoryList={this.props.categoryList}
+                checkedList={this.state.categorySelected}
+              />
+            ) : null}
           </ul>
         </Col>
         <Col>
@@ -130,6 +154,7 @@ export default class CategoryFilter extends React.Component<
             </div>
           </div>
         </Col>
+        <Col />
       </Row>
     );
   }

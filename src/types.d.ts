@@ -34,3 +34,6 @@ interface TransactionsState {
   transactionsIsLoaded: boolean;
   transactionIsSaved: boolean;
 }
+interface CheckedList {
+  [key: string]: boolean;
+}

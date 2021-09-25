@@ -10,6 +10,9 @@
 .col-filter-date-2 {
   max-width: 30vw !important;
 }
+.col-filter-check {
+  max-width: 16vw !important;
+}
 .filter-count {
   float: right;
   margin-left: 5em !important;
@@ -23,4 +26,13 @@
 }
 .list-group {
   cursor: pointer;
+}
+.filter-check {
+  margin-top: 0.4em !important;
+}
+.check-category-scrolled {
+  max-height: 20vh;
+  overflow-y: scroll;
+}
+.dropdown-categories-list {
 }

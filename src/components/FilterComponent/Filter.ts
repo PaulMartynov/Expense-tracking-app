@@ -19,30 +19,82 @@ export function filterTransactionsByText(
 export function filterCategoriesByText(
   text: string,
   categories: ExpCategory[]
-): ExpCategory[] {
+): CheckedList {
+  const checked: CheckedList = {};
   if (!text || text === "") {
-    return categories;
+    categories.forEach((cat) => {
+      checked[cat.categoryName] = true;
+      cat.subCategoriesList.forEach((sub) => {
+        checked[`${cat.categoryName} ${sub.name}`] = true;
+        sub.children.forEach((child) => {
+          checked[`${cat.categoryName} ${sub.name} ${child}`] = true;
+        });
+      });
+    });
+    return checked;
   }
   const filterText = text.toLowerCase();
-  const filtered: ExpCategory[] = [];
   categories.forEach((cat) => {
-    let catPushed = false;
-    if (cat.categoryName.toLowerCase().includes(filterText)) {
-      filtered.push(cat);
-      catPushed = true;
-    }
-    cat.subCategoriesList.forEach((subCat) => {
-      if (subCat.name.toLowerCase().includes(filterText) && !catPushed) {
-        filtered.push(cat);
-        catPushed = true;
+    checked[cat.categoryName] = cat.categoryName
+      .toLowerCase()
+      .includes(filterText);
+    cat.subCategoriesList.forEach((sub) => {
+      if (sub.name.toLowerCase().includes(filterText)) {
+        checked[`${cat.categoryName} ${sub.name}`] = true;
+        checked[cat.categoryName] = true;
+      } else {
+        checked[`${cat.categoryName} ${sub.name}`] = false;
       }
-      subCat.children.forEach((child) => {
-        if (child.toLowerCase().includes(filterText) && !catPushed) {
-          filtered.push(cat);
-          catPushed = true;
+      sub.children.forEach((child) => {
+        if (child.toLowerCase().includes(filterText)) {
+          checked[`${cat.categoryName} ${sub.name} ${child}`] = true;
+          checked[`${cat.categoryName} ${sub.name}`] = true;
+          checked[cat.categoryName] = true;
+        } else {
+          checked[`${cat.categoryName} ${sub.name} ${child}`] = false;
         }
       });
     });
   });
+  return checked;
+}
+
+export function filterCategories(
+  checked: CheckedList,
+  categories: ExpCategory[]
+): ExpCategory[] {
+  const filtered: ExpCategory[] = [];
+  categories.forEach((cat) => {
+    let pushed = false;
+    if (checked[cat.categoryName]) {
+      filtered.push(cat);
+      pushed = true;
+    }
+    if (!pushed) {
+      cat.subCategoriesList.forEach((sub) => {
+        if (checked[`${cat.categoryName} ${sub.name}`]) {
+          filtered.push(cat);
+          pushed = true;
+        }
+        if (!pushed) {
+          sub.children.forEach((child) => {
+            if (checked[`${cat.categoryName} ${sub.name} ${child}`]) {
+              filtered.push(cat);
+              pushed = true;
+            }
+          });
+        }
+      });
+    }
+  });
   return filtered;
+}
+
+export function allChecked(checked: CheckedList): boolean {
+  for (const key of Object.keys(checked)) {
+    if (!checked[key]) {
+      return false;
+    }
+  }
+  return true;
 }
