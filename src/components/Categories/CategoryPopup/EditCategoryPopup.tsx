@@ -142,11 +142,9 @@ export default class EditCategoryPopup extends React.Component<
               </div>
               <div className={"subcategories-cards"}>
                 {this.state.subCategories.map((value, index) => (
-                  <React.Fragment
-                    key={`sub-cat-${index}`}
-                    data-testid={`modal-subcategory-${index}`}
-                  >
+                  <React.Fragment key={`sub-cat-${index}`}>
                     <SubCategory
+                      data-testid={`modal-subcategory-${index}`}
                       id={index}
                       name={value.name}
                       childrens={value.children}
