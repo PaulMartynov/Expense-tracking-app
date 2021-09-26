@@ -12,4 +12,4 @@
 - поддерживает просмотр статистики
 - приложение хранит данных отдельно для каждого пользователя
 - покрытие кода от 60%
-- доступно для просмотра и проверки на ![github pages](https://paulmartynov.github.io/Expense-tracking-app/)
+- доступно для просмотра и проверки на [github pages](https://paulmartynov.github.io/Expense-tracking-app/)
