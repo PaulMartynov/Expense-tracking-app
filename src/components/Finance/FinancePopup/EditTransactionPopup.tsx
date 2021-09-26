@@ -34,9 +34,10 @@ export default class EditTransactionPopup extends React.Component<
     const category = this.props.categoryList.filter(
       (item) => item.categoryName === this.props.transaction.category
     )[0];
-    const subcategory = category.subCategoriesList.filter(
-      (item) => item.name === this.props.transaction.subcategory
-    )[0];
+    const subcategory =
+      category?.subCategoriesList.filter(
+        (item) => item.name === this.props.transaction.subcategory
+      )[0] ?? null;
     this.state = {
       description: this.props.transaction.description,
       date: `${date.getFullYear()}-${`0${date.getMonth() + 1}`.slice(
@@ -192,7 +193,7 @@ export default class EditTransactionPopup extends React.Component<
         setActive={this.props.setActive}
         children={
           <>
-            <div className="modal-body">
+            <div className="modal-body" data-testid={`modal-transaction-body`}>
               <div className="form-group row">
                 <label
                   htmlFor="operation-description"
@@ -207,6 +208,7 @@ export default class EditTransactionPopup extends React.Component<
                     id={"operation-description"}
                     value={this.state.description}
                     onChange={this.onDescriptionChange}
+                    data-testid={`modal-transaction-description-input`}
                     placeholder={"Добавьте описание"}
                   />
                 </div>
@@ -223,6 +225,7 @@ export default class EditTransactionPopup extends React.Component<
                     type="date"
                     className="form-control"
                     id="operation-date"
+                    data-testid={`modal-transaction-date`}
                     value={this.state.date.toString()}
                     onChange={this.onDateChange}
                   />
@@ -238,6 +241,7 @@ export default class EditTransactionPopup extends React.Component<
                     type="time"
                     id="operation-time"
                     className="form-control"
+                    data-testid={`modal-transaction-time`}
                     value={this.state.time}
                     onChange={this.onTimeChange}
                     required
@@ -256,6 +260,7 @@ export default class EditTransactionPopup extends React.Component<
                     type="number"
                     className="form-control"
                     id={"operation-amount"}
+                    data-testid={`modal-transaction-amount`}
                     value={this.state.amount}
                     step={0.01}
                     min={0}
@@ -277,6 +282,7 @@ export default class EditTransactionPopup extends React.Component<
                       name="btnradio"
                       id="btnradio1"
                       autoComplete="off"
+                      data-testid={`modal-transaction-expense`}
                       checked={this.state.expense}
                       onChange={this.onTypeChange}
                     />
@@ -292,6 +298,7 @@ export default class EditTransactionPopup extends React.Component<
                       name="btnradio"
                       id="btnradio2"
                       autoComplete="off"
+                      data-testid={`modal-transaction-income`}
                       checked={this.state.income}
                       onChange={this.onTypeChange}
                     />
@@ -315,6 +322,7 @@ export default class EditTransactionPopup extends React.Component<
                   <select
                     className="form-control"
                     id="category-select"
+                    data-testid={`modal-transaction-select-cat`}
                     onChange={this.onChangeOption}
                   >
                     {this.getCategories()}
@@ -332,6 +340,7 @@ export default class EditTransactionPopup extends React.Component<
                   <select
                     className="form-control"
                     id="category-select"
+                    data-testid={`modal-transaction-select-sub-cat`}
                     onChange={this.onChangeSubCategory}
                   >
                     <option key={`sub-category-option-no-option`} />
@@ -350,6 +359,7 @@ export default class EditTransactionPopup extends React.Component<
                   <select
                     className="form-control"
                     id="category-select"
+                    data-testid={`modal-transaction-select-sub-child`}
                     onChange={this.onChangeChild}
                   >
                     <option key={`sub-child-category-option-no-option`} />
@@ -361,12 +371,14 @@ export default class EditTransactionPopup extends React.Component<
             <div className="modal-footer">
               <Button
                 className="btn btn-primary"
+                data-testid={`modal-transaction-save-btn`}
                 onClick={this.saveTransaction}
               >
                 Сохранить
               </Button>
               <Button
                 className="btn btn-danger"
+                data-testid={`modal-transaction-del-btn`}
                 onClick={async () => {
                   await this.props.deleteFn(this.props.transaction.uuid);
                 }}
@@ -376,6 +388,7 @@ export default class EditTransactionPopup extends React.Component<
               <Button
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
+                data-testid={`modal-transaction-close-btn`}
                 onClick={this.props.setActive}
               >
                 Закрыть
