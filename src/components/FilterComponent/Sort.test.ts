@@ -63,6 +63,29 @@ const testData: Transaction[] = [
   },
 ];
 
+const testData2: Transaction[] = [
+  {
+    amount: 200,
+    type: "expense",
+    uuid: "125",
+    date: new Date().getTime() - 5000,
+    description: "test-125",
+    category: "c",
+    subcategory: "c",
+    childSubCategory: "d",
+  },
+  {
+    amount: 100,
+    type: "expense",
+    uuid: "123",
+    date: new Date().getTime(),
+    description: "test-124",
+    category: "b",
+    subcategory: "b",
+    childSubCategory: "e",
+  },
+];
+
 describe("testing sortTransactionsBy function", () => {
   test("it is a function", () => {
     expect(sortTransactionsBy).toBeInstanceOf(Function);
@@ -88,5 +111,12 @@ describe("testing sortTransactionsBy function", () => {
     expect(sortTransactionsBy("CATEGORY-FORM-Z-TO-A", testData)[0].uuid).toBe(
       "128"
     );
+    expect(
+      sortTransactionsBy("DESCRIPTION-FORM-Z-TO-A", testData2)[0].uuid
+    ).toBe("125");
+    expect(sortTransactionsBy("CATEGORY-FORM-Z-TO-A", testData2)[0].uuid).toBe(
+      "125"
+    );
+    expect(sortTransactionsBy("-", testData2)[0].uuid).toBe("125");
   });
 });
