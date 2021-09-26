@@ -53,14 +53,17 @@ export default class SubCategory extends React.Component<
 
   render(): JSX.Element {
     return (
-      <div className="card border-primary mb-3">
+      <div className="card border-primary mb-3" data-testid={"sub-card"}>
         <div className="card-header">
           <div className="modal-header">
-            <h6 className="modal-title">{this.props.name}</h6>
+            <h6 className="modal-title" data-testid={"sub-card-name"}>
+              {this.props.name}
+            </h6>
             <button
               onClick={() => {
                 this.props.deleteFunc(this.props.id);
               }}
+              data-testid={"sub-card-del-btn"}
               className="btn-close btn-close-white"
               aria-label="Close"
             />
@@ -73,6 +76,7 @@ export default class SubCategory extends React.Component<
               className="form-control form-control-sm"
               placeholder="Добавить подкатегорию"
               aria-describedby="button-subCategory-btn"
+              data-testid={"sub-card-input"}
               required={true}
               value={this.state.childName}
               onChange={this.onChangeName}
@@ -81,6 +85,7 @@ export default class SubCategory extends React.Component<
               className="btn btn-sm"
               type="button"
               id="button-subCategory-btn"
+              data-testid={"sub-card-add-btn"}
               onClick={this.addCategory}
             >
               Добавить

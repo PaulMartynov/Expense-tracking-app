@@ -34,9 +34,13 @@ export default class CategoryCard extends React.Component<
     await this.props.deleteFn(id);
   };
 
-  render() {
+  render(): JSX.Element {
     return (
-      <div className={"category-card"} onClick={this.setActive}>
+      <div
+        className={"category-card"}
+        onClick={this.setActive}
+        data-testid={"category-card"}
+      >
         {this.state.isActive ? (
           <EditCategoryPopup
             active={this.state.isActive}
@@ -48,7 +52,9 @@ export default class CategoryCard extends React.Component<
           />
         ) : null}
         <div className="card-header category-card-header">
-          <h4>{this.props.category.categoryName}</h4>
+          <h4 data-testid={"category-card-name"}>
+            {this.props.category.categoryName}
+          </h4>
         </div>
         <div className="card-body">
           {this.props.category.subCategoriesList.map((value, index) => (
@@ -57,14 +63,17 @@ export default class CategoryCard extends React.Component<
             >
               <div className={"category-card sub-category-card"}>
                 <div className="card-header category-card-header">
-                  <h5>{value.name}</h5>
+                  <h5 data-testid={"subcategory-card-name"}>{value.name}</h5>
                 </div>
                 <div>
                   {value.children.map((item, ind) => (
                     <React.Fragment
                       key={`${this.props.category.categoryName}-sub-category-id-${index}-child-${ind}`}
                     >
-                      <span className="badge bg-primary sub-cat-children">
+                      <span
+                        data-testid={"subcategory-child-name"}
+                        className="badge bg-primary sub-cat-children"
+                      >
                         {item}
                       </span>
                     </React.Fragment>

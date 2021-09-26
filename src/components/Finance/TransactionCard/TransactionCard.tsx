@@ -45,7 +45,11 @@ export default class TransactionCard extends React.Component<
     const hours = `0${date.getHours()}`.slice(-2);
     const minutes = `0${date.getMinutes()}`.slice(-2);
     return (
-      <Row className={`transaction`} onClick={this.setModalActive}>
+      <Row
+        className={`transaction`}
+        onClick={this.setModalActive}
+        data-testid={"transaction-card"}
+      >
         {this.state.isModalActive ? (
           <EditTransactionPopup
             active={this.state.isModalActive}
@@ -58,16 +62,23 @@ export default class TransactionCard extends React.Component<
         ) : null}
         <Col
           className={"transaction-content"}
+          data-testid={"transaction-date"}
         >{`${day}.${month}.${year} ${hours}:${minutes}`}</Col>
         <Col
           className={`transaction-content transaction-type-${this.props.transaction.type}`}
         >
           {this.props.transaction.amount.toFixed(2)}
         </Col>
-        <Col className={"transaction-content"}>
+        <Col
+          className={"transaction-content"}
+          data-testid={"transaction-description"}
+        >
           {this.props.transaction.description}
         </Col>
-        <Col className={"transaction-content-categories"}>
+        <Col
+          className={"transaction-content-categories"}
+          data-testid={"transaction-category"}
+        >
           <span className="badge bg-primary transaction-category-card-item">
             {this.props.transaction.category}
           </span>

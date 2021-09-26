@@ -88,7 +88,7 @@ export default class EditCategoryPopup extends React.Component<
         setActive={this.props.setActive}
         children={
           <>
-            <div className="modal-body">
+            <div className="modal-body" data-testid={"modal-body"}>
               <div className="form-group row">
                 <label
                   htmlFor="operation-description"
@@ -104,6 +104,7 @@ export default class EditCategoryPopup extends React.Component<
                     placeholder="Введите название категории"
                     required={true}
                     onChange={this.onCategoryChange}
+                    data-testid={"modal-category-input"}
                   />
                 </div>
               </div>
@@ -125,12 +126,14 @@ export default class EditCategoryPopup extends React.Component<
                       aria-describedby="button-subCategory-btn"
                       onChange={this.onSubCategoryChange}
                       required={true}
+                      data-testid={"modal-subcategory-input"}
                     />
                     <Button
                       className="btn btn-sm"
                       type="button"
                       id="button-subCategory-btn"
                       onClick={this.addSubCategory}
+                      data-testid={"modal-subcategory-add-btn"}
                     >
                       Добавить
                     </Button>
@@ -139,7 +142,10 @@ export default class EditCategoryPopup extends React.Component<
               </div>
               <div className={"subcategories-cards"}>
                 {this.state.subCategories.map((value, index) => (
-                  <React.Fragment key={`sub-cat-${index}`}>
+                  <React.Fragment
+                    key={`sub-cat-${index}`}
+                    data-testid={`modal-subcategory-${index}`}
+                  >
                     <SubCategory
                       id={index}
                       name={value.name}
@@ -152,9 +158,10 @@ export default class EditCategoryPopup extends React.Component<
                 ))}
               </div>
             </div>
-            <div className="modal-footer">
+            <div className="modal-footer" data-testid={"modal-footer"}>
               <Button
                 className="btn btn-primary"
+                data-testid={"modal-footer-save-btn"}
                 onClick={async () => {
                   await this.props.saveFn(this.props.id, {
                     categoryName: this.state.categoryName,
@@ -166,6 +173,7 @@ export default class EditCategoryPopup extends React.Component<
               </Button>
               <Button
                 className="btn btn-danger"
+                data-testid={"modal-footer-del-btn"}
                 onClick={async () => {
                   await this.props.deleteFn(this.props.id);
                 }}
@@ -176,6 +184,7 @@ export default class EditCategoryPopup extends React.Component<
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
                 onClick={this.props.setActive}
+                data-testid={"modal-footer-close-btn"}
               >
                 Закрыть
               </Button>

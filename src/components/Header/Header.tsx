@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
@@ -39,14 +39,14 @@ class Header extends React.Component<
           <NavigationBar />
         </div>
         {!this.props.isAuthenticated && (
-          <div className={"user-login"}>
+          <div className={"user-login"} data-testid={"auth-btn"}>
             <Button variant="outline-info" onClick={this.login}>
               Войти
             </Button>
           </div>
         )}
         {this.props.isAuthenticated && (
-          <div className={"user-login"}>
+          <div className={"user-login"} data-testid={"auth-btn"}>
             <label>{this.props.userName}</label>
             <Button variant="outline-info" onClick={this.login}>
               Выйти

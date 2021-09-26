@@ -4,9 +4,9 @@ export default function About(): JSX.Element {
   return (
     <>
       <br />
-      <h3>Приложение для учета расходов</h3>
+      <h3 data-testid={"about-header"}>Приложение для учета расходов</h3>
       <br />
-      <section>
+      <section data-testid={"about-section"}>
         <h6>Для работы в приложении, необходима авторизация.</h6>
         <br />
         <p>
