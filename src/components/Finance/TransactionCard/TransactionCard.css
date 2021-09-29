@@ -1,0 +1,29 @@
+.transaction {
+  min-height: 5vh;
+  border-radius: 6px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.transaction .transaction-type-expense {
+  background-color: rgba(255, 137, 137, 0.4);
+}
+.transaction .transaction-type-income {
+  background-color: rgba(186, 255, 137, 0.4);
+}
+.transaction-content {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.transaction-content-categories {
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em;
+}
+.transaction-category-card-item {
+  margin-right: 0.7em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

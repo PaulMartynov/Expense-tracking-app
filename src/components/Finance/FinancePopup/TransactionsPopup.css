@@ -1,0 +1,12 @@
+.operation-date {
+  max-width: 10vw !important;
+}
+.operation-time {
+  max-width: 7vw !important;
+}
+.operation-amount {
+  max-width: 25vw !important;
+}
+.operation-type {
+  margin-top: 0.3em !important;
+}

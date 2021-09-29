@@ -1,0 +1,38 @@
+.filter-date {
+  max-width: 8vw !important;
+}
+.filter-time {
+  max-width: 5vw !important;
+}
+.col-filter-date {
+  max-width: 17vw !important;
+}
+.col-filter-date-2 {
+  max-width: 30vw !important;
+}
+.col-filter-check {
+  max-width: 16vw !important;
+}
+.filter-count {
+  float: right;
+  margin-left: 5em !important;
+  max-width: 7vw !important;
+}
+.filter-count-lbl {
+  max-width: 10vw !important;
+}
+.btn-filter-count {
+  float: right;
+}
+.list-group {
+  cursor: pointer;
+}
+.filter-check {
+  margin-top: 0.4em !important;
+}
+.check-category-scrolled {
+  max-height: 20vh;
+  overflow-y: scroll;
+}
+.dropdown-categories-list {
+}

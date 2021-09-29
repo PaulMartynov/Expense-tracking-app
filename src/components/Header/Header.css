@@ -1,0 +1,9 @@
+.user-login {
+  float: right;
+  align-content: center;
+}
+.navbar-panel {
+  flex-wrap: wrap;
+  margin-top: 5px;
+  float: left;
+}

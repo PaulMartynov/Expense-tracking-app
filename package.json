@@ -1,0 +1,122 @@
+{
+  "name": "expense-tracking-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Expense tracking app",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaulMartynov/Expense-tracking-app.git"
+  },
+  "keywords": [
+    "expense",
+    "tracking"
+  ],
+  "author": "PaulMartynov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PaulMartynov/Expense-tracking-app/issues"
+  },
+  "homepage": "https://github.com/PaulMartynov/Expense-tracking-app#readme",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "prettier --check . && eslint . --ext .js,.ts && tsc --noEmit",
+    "lint:fix": "prettier --write . && eslint . --fix --ext .js,.ts",
+    "make-badges": "istanbul-badges-readme",
+    "prepare": "husky install",
+    "build": "webpack --mode=production --env production  --progress",
+    "start": "webpack serve --mode=development",
+    "storybook": "start-storybook -p 6006",
+    "loki:test": "loki test",
+    "loki:update": "loki update",
+    "loki:ci": "build-storybook -o ./storybook-static --quiet && loki --requireReference --reactUri file:./storybook-static"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.6.1",
+    "bootstrap": "^5.0.2",
+    "bootswatch": "^5.0.2",
+    "firebase": "^8.8.1",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.6.1",
+    "react-dom": "^17.0.2",
+    "react-google-charts": "^3.0.15",
+    "react-redux": "^7.2.4",
+    "react-router-bootstrap": "^0.25.0",
+    "react-router-dom": "^5.2.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.15.0",
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-essentials": "^6.3.7",
+    "@storybook/addon-links": "^6.3.7",
+    "@storybook/builder-webpack5": "^6.3.7",
+    "@storybook/manager-webpack5": "^6.3.7",
+    "@storybook/react": "^6.3.7",
+    "@storybook/storybook-deployer": "^2.8.10",
+    "@testing-library/dom": "^8.2.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/react": "^17.0.19",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-router-bootstrap": "^0.24.5",
+    "@types/react-router-dom": "^5.1.8",
+    "@types/redux-mock-store": "^1.0.3",
+    "@types/uuid": "^8.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-jsx-remove-data-test-id": "^3.0.0",
+    "css-loader": "^6.2.0",
+    "dotenv-webpack": "^1.8.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-jest-dom": "^3.9.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "html-webpack-plugin": "^5.3.2",
+    "husky": "^7.0.2",
+    "identity-obj-proxy": "^3.0.0",
+    "istanbul-badges-readme": "^1.4.0",
+    "jest": "^27.1.0",
+    "lint-staged": "^11.1.2",
+    "loki": "^0.28.1",
+    "prettier": "^2.3.2",
+    "redux-mock-store": "^1.5.4",
+    "sass": "^1.38.2",
+    "sass-loader": "^12.1.0",
+    "style-loader": "^3.2.1",
+    "typescript": "^4.4.2",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.0.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": "eslint --cache --fix --ext .js,.ts",
+    "*.{js,ts,tsx,css,md,yml,html,json}": "prettier --write"
+  },
+  "loki": {
+    "configurations": {
+      "chrome.laptop": {
+        "target": "chrome.docker",
+        "width": 1366,
+        "height": 768,
+        "deviceScaleFactor": 1,
+        "mobile": false
+      },
+      "chrome.iphone7": {
+        "target": "chrome.docker",
+        "preset": "iPhone 7"
+      }
+    }
+  }
+}
