@@ -107,7 +107,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
     });
     builder.addCase(loginByEmailAndPassword.rejected, (state, action) => {
-      state.error = action.type;
+      state.error = `${action.error.code?.replace("auth/", "")}`;
       state.userId = null;
       state.isAuthenticated = false;
     });
@@ -123,7 +123,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
     });
     builder.addCase(registerByEmailAndPassword.rejected, (state, action) => {
-      state.error = action.type;
+      state.error = `${action.error.code?.replace("auth/", "")}`;
       state.userId = null;
       state.isAuthenticated = false;
     });

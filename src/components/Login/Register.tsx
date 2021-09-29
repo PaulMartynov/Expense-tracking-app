@@ -23,12 +23,38 @@ class Login extends React.Component<
   {
     email: string;
     password: string;
+    hasError: boolean;
+    error: string;
   }
 > {
   state = {
     email: "",
     password: "",
+    hasError: false,
+    error: "",
   };
+
+  setError(): void {
+    switch (this.props.auth.error) {
+      case "email-already-in-use":
+        this.setState({
+          error: "Пользователь с таким email уже существует.",
+          hasError: this.props.auth.error.length > 0,
+        });
+        break;
+      default:
+        this.setState({
+          error: this.props.auth.error,
+          hasError: this.props.auth.error.length > 0,
+        });
+    }
+  }
+
+  componentDidUpdate(prevProps: Readonly<DispatchPropsType>) {
+    if (prevProps.auth.error !== this.props.auth.error) {
+      this.setError();
+    }
+  }
 
   isValid = (): boolean => {
     return (
@@ -74,6 +100,9 @@ class Login extends React.Component<
             <div className="card login-card">
               <article className="card-body">
                 <h4 className="card-title mb-4 mt-1">Регистрация</h4>
+                {this.state.hasError && (
+                  <p className="text-danger">{this.state.error}</p>
+                )}
                 <form onSubmit={this.register}>
                   <div className={`form-group`}>
                     <label htmlFor="InputEmail1" className="form-label mt-4">
