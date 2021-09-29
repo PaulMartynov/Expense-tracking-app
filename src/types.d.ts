@@ -4,6 +4,7 @@ interface UserInfo {
 }
 interface AuthState extends UserInfo {
   isAuthenticated: boolean;
+  error: string;
 }
 interface CategoryState {
   categoryList: ExpCategory[];

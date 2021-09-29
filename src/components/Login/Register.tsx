@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import { store } from "../../store/store";
-import { loginByEmailAndPassword } from "../../store/authReducer";
+import { registerByEmailAndPassword } from "../../store/authReducer";
 import { ThunkProps } from "../ThunkTypes";
 import "./Login.css";
 
 const mapDispatchToProps = {
-  loginByEmailAndPassword,
+  registerByEmailAndPassword,
 };
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
@@ -39,12 +39,12 @@ class Login extends React.Component<
     );
   };
 
-  login = (event: React.FormEvent<HTMLFormElement>): void => {
+  register = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     if (!this.isValid()) {
       return;
     }
-    this.props.loginByEmailAndPassword({
+    this.props.registerByEmailAndPassword({
       email: this.state.email,
       password: this.state.password,
     });
@@ -73,11 +73,15 @@ class Login extends React.Component<
           <Col className={"auth-container"}>
             <div className="card login-card">
               <article className="card-body">
-                <h4 className="card-title mb-4 mt-1">Вход</h4>
-                <form onSubmit={this.login}>
+                <h4 className="card-title mb-4 mt-1">Регистрация</h4>
+                <form onSubmit={this.register}>
                   <div className={`form-group`}>
+                    <label htmlFor="InputEmail1" className="form-label mt-4">
+                      Введите адрес вашей электронной почты:
+                    </label>
                     <input
                       type="email"
+                      id={"InputEmail1"}
                       className={`form-control`}
                       aria-describedby="emailHelp"
                       placeholder="Email"
@@ -86,24 +90,31 @@ class Login extends React.Component<
                     />
                   </div>
                   <div className={`form-group`}>
+                    <label htmlFor="InputPasswd1" className="form-label mt-4">
+                      Придумайте пароль:
+                    </label>
                     <input
                       type="password"
+                      id={"InputPasswd1"}
                       className={`form-control`}
                       placeholder="Password"
                       minLength={6}
                       onChange={this.passwordInput}
                       required={true}
                     />
+                    <small id="registerHelp" className="form-text text-muted">
+                      Минимальная длинная пароля - 6 символов
+                    </small>
                   </div>
                   <div className="form-group submit-btn">
                     <button type="submit" className="btn btn-primary">
-                      Войти
+                      Зарегистрироваться
                     </button>
                     <a
-                      href="#/register"
+                      href="#/login"
                       className="register-link btn btn-outline-primary"
                     >
-                      Регистрация
+                      Вход
                     </a>
                   </div>
                 </form>

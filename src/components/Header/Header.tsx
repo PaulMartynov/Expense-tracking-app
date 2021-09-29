@@ -38,21 +38,14 @@ class Header extends React.Component<
         <div className={"navbar-panel"}>
           <NavigationBar />
         </div>
-        {!this.props.isAuthenticated && (
-          <div className={"user-login"} data-testid={"auth-btn"}>
-            <Button variant="outline-info" onClick={this.login}>
-              Войти
-            </Button>
-          </div>
-        )}
-        {this.props.isAuthenticated && (
-          <div className={"user-login"} data-testid={"auth-btn"}>
+        <div className={"user-login"} data-testid={"auth-btn"}>
+          {this.props.isAuthenticated ? (
             <label>{this.props.userName}</label>
-            <Button variant="outline-info" onClick={this.login}>
-              Выйти
-            </Button>
-          </div>
-        )}
+          ) : null}
+          <Button variant="outline-primary" onClick={this.login}>
+            {this.props.isAuthenticated ? "Выход" : "Вход"}
+          </Button>
+        </div>
       </div>
     );
   }

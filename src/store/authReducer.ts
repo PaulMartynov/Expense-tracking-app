@@ -69,12 +69,14 @@ function getInitialState(): AuthState {
       userId: data[0],
       username: data[1],
       isAuthenticated: true,
+      error: "",
     };
   }
   return {
     userId: null,
     username: null,
     isAuthenticated: false,
+    error: "",
   };
 }
 
@@ -104,12 +106,14 @@ const authSlice = createSlice({
     builder.addCase(loginByEmailAndPassword.pending, (state) => {
       state.isAuthenticated = false;
     });
-    builder.addCase(loginByEmailAndPassword.rejected, (state) => {
+    builder.addCase(loginByEmailAndPassword.rejected, (state, action) => {
+      state.error = action.type;
       state.userId = null;
       state.isAuthenticated = false;
     });
     builder.addCase(loginByEmailAndPassword.fulfilled, (state, action) => {
       saveData([action.payload.userId, action.payload.username]);
+      state.error = "";
       state.userId = action.payload.userId;
       state.username = action.payload.username;
       state.isAuthenticated = true;
@@ -118,12 +122,14 @@ const authSlice = createSlice({
     builder.addCase(registerByEmailAndPassword.pending, (state) => {
       state.isAuthenticated = false;
     });
-    builder.addCase(registerByEmailAndPassword.rejected, (state) => {
+    builder.addCase(registerByEmailAndPassword.rejected, (state, action) => {
+      state.error = action.type;
       state.userId = null;
       state.isAuthenticated = false;
     });
     builder.addCase(registerByEmailAndPassword.fulfilled, (state, action) => {
       saveData([action.payload.userId, action.payload.username]);
+      state.error = "";
       state.userId = action.payload.userId;
       state.username = action.payload.username;
       state.isAuthenticated = true;
