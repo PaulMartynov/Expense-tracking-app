@@ -36,7 +36,7 @@ class Header extends React.Component<
     return (
       <div>
         <div className={"navbar-panel"}>
-          <NavigationBar />
+          <NavigationBar isAuthenticated={this.props.isAuthenticated} />
         </div>
         <div className={"user-login"} data-testid={"auth-btn"}>
           {this.props.isAuthenticated ? (
