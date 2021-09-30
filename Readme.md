@@ -1,6 +1,6 @@
-| Statements                                                                      | Branches                                                               | Functions                                                                     | Lines                                                                 |
-| ------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| ![Statements](https://img.shields.io/badge/statements-92.04%25-brightgreen.svg) | ![Branches](https://img.shields.io/badge/branches-89.52%25-yellow.svg) | ![Functions](https://img.shields.io/badge/functions-92.59%25-brightgreen.svg) | ![Lines](https://img.shields.io/badge/lines-92.04%25-brightgreen.svg) |
+| Statements                                                                 | Branches                                                            | Functions                                                             | Lines                                                            |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| ![Statements](https://img.shields.io/badge/statements-87.68%25-yellow.svg) | ![Branches](https://img.shields.io/badge/branches-75.98%25-red.svg) | ![Functions](https://img.shields.io/badge/functions-71.88%25-red.svg) | ![Lines](https://img.shields.io/badge/lines-87.68%25-yellow.svg) |
 
 # Приложение для учета расходов
 

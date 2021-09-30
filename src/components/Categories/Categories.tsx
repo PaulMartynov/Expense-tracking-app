@@ -156,7 +156,11 @@ class Categories extends React.Component<
         <br />
         <div>
           <div className={"add-category-card-btn"}>
-            <Button onClick={this.setModalActive} id="add-category-btn">
+            <Button
+              onClick={this.setModalActive}
+              id="add-category-btn"
+              data-testid={"add-category-btn"}
+            >
               Добавить
             </Button>
           </div>

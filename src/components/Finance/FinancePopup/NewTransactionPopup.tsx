@@ -197,6 +197,7 @@ export default class NewTransactionPopup extends React.Component<
                     type="text"
                     className="form-control"
                     id={"operation-description"}
+                    data-testid={`modal-transaction-description-input`}
                     value={this.state.description}
                     onChange={this.onDescriptionChange}
                     placeholder={"Добавьте описание"}
@@ -353,6 +354,7 @@ export default class NewTransactionPopup extends React.Component<
             <div className="modal-footer">
               <Button
                 className="btn btn-primary"
+                data-testid={`modal-transaction-save-btn`}
                 onClick={this.saveTransaction}
               >
                 Сохранить
@@ -360,6 +362,7 @@ export default class NewTransactionPopup extends React.Component<
               <Button
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
+                data-testid={`modal-transaction-close-btn`}
                 onClick={this.props.setActive}
               >
                 Закрыть

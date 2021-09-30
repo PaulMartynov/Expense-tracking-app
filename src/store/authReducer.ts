@@ -54,7 +54,7 @@ export function onAuthChange(user: UserInfo): AnyAction {
 
 export const onAuthChangeThunk = () => {
   return (dispatch: Dispatch): void => {
-    appAuth!.onAuthStateChanged((data) => {
+    appAuth().onAuthStateChanged((data) => {
       if (data) {
         dispatch(onAuthChange({ userId: data.uid, username: data.email }));
       }
