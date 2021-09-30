@@ -16,9 +16,9 @@ import { ThunkProps } from "../ThunkTypes";
 import "./Finance.css";
 import NewTransactionPopup from "./FinancePopup/NewTransactionPopup";
 import TransactionCard from "./TransactionCard/TransactionCard";
-import TransactionsFilter from "../FilterComponent/TransactionsFilter";
+import TransactionsFilter from "../FilterComponent/TransactionsFilterComponent/TransactionsFilter";
 import { sortTransactionsBy } from "../FilterComponent/Sort";
-import CategoryFilter from "../FilterComponent/CategoryFilter";
+import CategoryFilter from "../FilterComponent/CategoryFilterComponent/CategoryFilter";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userId: state.auth.userId,

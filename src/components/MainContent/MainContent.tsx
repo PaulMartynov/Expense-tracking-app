@@ -13,10 +13,10 @@ import {
 } from "../../store/transactionsReducer";
 import { ThunkProps } from "../ThunkTypes";
 import { sortTransactionsBy } from "../FilterComponent/Sort";
-import TransactionsFilter from "../FilterComponent/TransactionsFilter";
+import TransactionsFilter from "../FilterComponent/TransactionsFilterComponent/TransactionsFilter";
 import PyeChart from "./Charts/PyeChart";
 import ColumnChart from "./Charts/ColumnChart";
-import CategoryFilter from "../FilterComponent/CategoryFilter";
+import CategoryFilter from "../FilterComponent/CategoryFilterComponent/CategoryFilter";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userId: state.auth.userId,

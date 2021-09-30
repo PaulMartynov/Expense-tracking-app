@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import "./Filter.css";
+import "../Filter.css";
 
 interface FilterProps {
   viewCountFn: (count: number) => Promise<void>;
@@ -124,6 +124,7 @@ export default class TransactionsFilter extends React.Component<
               <div className="col-sm-10 filter-date">
                 <input
                   type="date"
+                  data-testid={`filter-date-from`}
                   className="form-control"
                   id="filter-date-from"
                   value={this.state.dateFrom}
@@ -134,6 +135,7 @@ export default class TransactionsFilter extends React.Component<
                 <input
                   type="time"
                   id="filter-time-from"
+                  data-testid={`filter-time-from`}
                   className="form-control"
                   value={this.state.timeFrom}
                   onChange={this.onTimeChange}
@@ -154,6 +156,7 @@ export default class TransactionsFilter extends React.Component<
                 <input
                   type="date"
                   className="form-control"
+                  data-testid={`filter-date-to`}
                   id="filter-date-to"
                   value={this.state.dateTo}
                   onChange={this.onDateChange}
@@ -163,6 +166,7 @@ export default class TransactionsFilter extends React.Component<
                 <input
                   type="time"
                   id="filter-time-to"
+                  data-testid={`filter-time-to`}
                   className="form-control"
                   value={this.state.timeTo}
                   onChange={this.onTimeChange}
@@ -172,7 +176,7 @@ export default class TransactionsFilter extends React.Component<
             </div>
           </Col>
           <Col className={"filter-date"} onClick={this.viewByDate}>
-            <Button>Показать</Button>
+            <Button data-testid={`filter-date-btn`}>Показать</Button>
           </Col>
           <Col>
             <div className="form-group row">
@@ -183,6 +187,7 @@ export default class TransactionsFilter extends React.Component<
                 <input
                   type="text"
                   id={"filter-count"}
+                  data-testid={`filter-count-input`}
                   value={this.state.count}
                   className="form-control"
                   onChange={this.onCountChange}
@@ -194,6 +199,7 @@ export default class TransactionsFilter extends React.Component<
           <Col className={"filter-date"}>
             <Button
               className="btn btn-primary btn-filter-count"
+              data-testid={`filter-count-btn`}
               type="button"
               onClick={this.viewCount}
             >
