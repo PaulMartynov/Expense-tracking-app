@@ -150,35 +150,33 @@ class MainContent extends React.Component<
         />
         <br />
         <br />
-        {this.props.transactionsIsLoaded && (
-          <>
-            <Row>
-              <Col>
-                <PyeChart
-                  transactions={this.state.transactionsList.filter(
-                    (t) => t.type === "expense"
-                  )}
-                  type={"расходы"}
-                />
-              </Col>
-              <Col>
-                <PyeChart
-                  transactions={this.state.transactionsList.filter(
-                    (t) => t.type === "income"
-                  )}
-                  type={"доходы"}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <ColumnChart
-                transactions={sortTransactionsBy("DATE-FROM-OLD", [
-                  ...this.state.transactionsList,
-                ])}
+        <>
+          <Row>
+            <Col>
+              <PyeChart
+                transactions={this.state.transactionsList.filter(
+                  (t) => t.type === "expense"
+                )}
+                type={"расходы"}
               />
-            </Row>
-          </>
-        )}
+            </Col>
+            <Col>
+              <PyeChart
+                transactions={this.state.transactionsList.filter(
+                  (t) => t.type === "income"
+                )}
+                type={"доходы"}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <ColumnChart
+              transactions={sortTransactionsBy("DATE-FROM-OLD", [
+                ...this.state.transactionsList,
+              ])}
+            />
+          </Row>
+        </>
       </>
     );
   }
