@@ -10,6 +10,7 @@ import About from "../About/About";
 import Finance from "../Finance/Finance";
 import { onAuthChangeThunk } from "../../store/authReducer";
 import Categories from "../Categories/Categories";
+import Register from "../Login/Register";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   isAuthenticated: state.auth.isAuthenticated,
@@ -36,6 +37,7 @@ class Routes extends React.Component<DispatchPropsType, never> {
     return (
       <Switch>
         <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
         <Route path="/about" component={About} />
         <Route
           exact

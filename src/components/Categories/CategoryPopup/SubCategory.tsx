@@ -96,6 +96,7 @@ export default class SubCategory extends React.Component<
               <label>{value}</label>
               <Button
                 className={"btn-danger btn-sm"}
+                data-testid={`ch-del-btn-${index}`}
                 onClick={() => {
                   this.deleteCategory(index);
                 }}

@@ -1,13 +1,13 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
-import "./Filter.css";
+import "../Filter.css";
 import {
   filterCategories,
   filterCategoriesByText,
   filterTransactionsByCheckList,
   filterTransactionsByText,
-} from "./Filter";
-import FilterMenu from "./FilterMenu/FilterMenu";
+} from "../Filter";
+import FilterMenu from "./FilterMenu";
 
 interface FilterProps {
   categoryList: ExpCategory[];
@@ -141,7 +141,10 @@ export default class CategoryFilter extends React.Component<
               onClick={this.showCategoryList}
             >
               Фильтр
-              <span className="badge bg-primary rounded-pill">
+              <span
+                className="badge bg-primary rounded-pill"
+                data-testid={`checked-count`}
+              >
                 {this.countSelected()}
               </span>
             </li>
@@ -164,6 +167,7 @@ export default class CategoryFilter extends React.Component<
             <div className="col-sm-10 col-filter-date-2">
               <input
                 type="text"
+                data-testid={`categorySearchInput`}
                 className="form-control"
                 id="categorySearch"
                 value={this.state.filterValue}

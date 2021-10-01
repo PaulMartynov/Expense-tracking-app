@@ -1,8 +1,15 @@
-label {
-  text-align: center;
-  min-width: 6%;
-  padding: 5px;
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.login-form-btn {
-  margin-right: 5px;
+.login-card {
+  padding: 1em 3em;
+}
+.submit-btn {
+  padding-top: 2em;
+  padding-bottom: 1em;
+}
+.register-link {
+  margin-left: 0.5em;
 }

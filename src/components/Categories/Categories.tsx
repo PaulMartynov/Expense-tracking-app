@@ -7,7 +7,7 @@ import { ThunkProps } from "../ThunkTypes";
 import NewCategoryPopup from "./CategoryPopup/NewCategoryPopup";
 import CategoryCard from "./CategoryCard/CategoryCard";
 import "./Categories.css";
-import CategoryFilter from "../FilterComponent/CategoryFilter";
+import CategoryFilter from "../FilterComponent/CategoryFilterComponent/CategoryFilter";
 
 const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
   userId: state.auth.userId,
@@ -156,7 +156,11 @@ class Categories extends React.Component<
         <br />
         <div>
           <div className={"add-category-card-btn"}>
-            <Button onClick={this.setModalActive} id="add-category-btn">
+            <Button
+              onClick={this.setModalActive}
+              id="add-category-btn"
+              data-testid={"add-category-btn"}
+            >
               Добавить
             </Button>
           </div>

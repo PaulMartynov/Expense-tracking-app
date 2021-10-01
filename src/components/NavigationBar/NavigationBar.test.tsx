@@ -9,7 +9,7 @@ describe("NavigationBar render test", () => {
     render(
       <>
         <HashRouter>
-          <NavigationBar />
+          <NavigationBar isAuthenticated={true} />
         </HashRouter>
       </>
     );
@@ -17,6 +17,20 @@ describe("NavigationBar render test", () => {
     expect(screen.queryByTestId("nav-bar-main")).toBeInTheDocument();
     expect(screen.queryByTestId("nav-bar-finance")).toBeInTheDocument();
     expect(screen.queryByTestId("nav-bar-category")).toBeInTheDocument();
+    expect(screen.queryByTestId("nav-bar-about")).toBeInTheDocument();
+  });
+  test("NavigationBar render in page, no auth", () => {
+    render(
+      <>
+        <HashRouter>
+          <NavigationBar isAuthenticated={false} />
+        </HashRouter>
+      </>
+    );
+    expect(screen.queryByTestId("nav-bar")).toBeInTheDocument();
+    expect(screen.queryByTestId("nav-bar-main")).toBeInTheDocument();
+    expect(screen.queryByTestId("nav-bar-finance")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("nav-bar-category")).not.toBeInTheDocument();
     expect(screen.queryByTestId("nav-bar-about")).toBeInTheDocument();
   });
 });

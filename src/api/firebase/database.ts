@@ -4,14 +4,17 @@ export const setExpCategory = async (
   userId: string,
   category: { categories: ExpCategory[] }
 ): Promise<ExpCategory[]> => {
-  await appDb.collection("category").doc(userId).set(category, { merge: true });
+  await appDb()
+    .collection("category")
+    .doc(userId)
+    .set(category, { merge: true });
   return category.categories;
 };
 
 export const getExpCategories = async (
   userId: string
 ): Promise<ExpCategory[]> => {
-  const snap = await appDb.collection("category").doc(userId).get();
+  const snap = await appDb().collection("category").doc(userId).get();
   const data = snap.data();
   if (data) {
     return data.categories;
@@ -23,7 +26,7 @@ export const addTransaction = async (
   userId: string,
   transaction: Transaction
 ): Promise<boolean> => {
-  await appDb
+  await appDb()
     .collection("transactions")
     .doc(userId)
     .collection("user_transactions")
@@ -34,7 +37,7 @@ export const addTransaction = async (
 export const getAllTransactions = async (
   userId: string
 ): Promise<Transaction[]> => {
-  const snap = await appDb
+  const snap = await appDb()
     .collection("transactions")
     .doc(userId)
     .collection("user_transactions")
@@ -51,7 +54,7 @@ export const getLastNTransactions = async (
   userId: string,
   n: number
 ): Promise<Transaction[]> => {
-  const snap = await appDb
+  const snap = await appDb()
     .collection("transactions")
     .doc(userId)
     .collection("user_transactions")
@@ -70,7 +73,7 @@ export const getTransactionsByDate = async (
   stat: number,
   end: number
 ): Promise<Transaction[]> => {
-  const snap = await appDb
+  const snap = await appDb()
     .collection("transactions")
     .doc(userId)
     .collection("user_transactions")
@@ -89,13 +92,13 @@ export const deleteTransaction = async (
   userId: string,
   uuid: string
 ): Promise<boolean> => {
-  const snap = await appDb
+  const snap = await appDb()
     .collection("transactions")
     .doc(userId)
     .collection("user_transactions")
     .where("uuid", "==", uuid)
     .get();
-  const batch = appDb.batch();
+  const batch = appDb().batch();
   snap.forEach((doc) => {
     batch.delete(doc.ref);
   });
@@ -107,13 +110,13 @@ export const updateTransaction = async (
   userId: string,
   transaction: Transaction
 ): Promise<boolean> => {
-  const snap = await appDb
+  const snap = await appDb()
     .collection("transactions")
     .doc(userId)
     .collection("user_transactions")
     .where("uuid", "==", transaction.uuid)
     .get();
-  const batch = appDb.batch();
+  const batch = appDb().batch();
   snap.forEach((doc) => {
     batch.update(doc.ref, "date", transaction.date);
     batch.update(doc.ref, "type", transaction.type);

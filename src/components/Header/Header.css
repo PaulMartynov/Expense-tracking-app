@@ -2,6 +2,9 @@
   float: right;
   align-content: center;
 }
+.user-login label {
+  margin-right: 0.5em;
+}
 .navbar-panel {
   flex-wrap: wrap;
   margin-top: 5px;

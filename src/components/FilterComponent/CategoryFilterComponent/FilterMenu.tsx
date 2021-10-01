@@ -85,6 +85,7 @@ export default class FilterMenu extends React.Component<
                   <div className="form-check">
                     <input
                       className="form-check-input filter-check"
+                      data-testid={`check-category-${cat.categoryName}`}
                       type="checkbox"
                       value={`${cat.categoryName}`}
                       id={`flexCheck-${cat.categoryName}`}
@@ -111,6 +112,7 @@ export default class FilterMenu extends React.Component<
                           <div className="form-check">
                             <input
                               className="form-check-input filter-check"
+                              data-testid={`check-category-${cat.categoryName}-${subCat.name}`}
                               type="checkbox"
                               value={`${cat.categoryName} ${subCat.name}`}
                               id={`flexCheck-${cat.categoryName}-${subCat.name}`}
@@ -142,6 +144,7 @@ export default class FilterMenu extends React.Component<
                                 <input
                                   className="form-check-input filter-check"
                                   type="checkbox"
+                                  data-testid={`check-category-${cat.categoryName}-${subCat.name}-${child}`}
                                   value={`${cat.categoryName} ${subCat.name} ${child}`}
                                   id={`flexCheck-${cat.categoryName}-${subCat.name}-${child}`}
                                   checked={
@@ -187,6 +190,7 @@ export default class FilterMenu extends React.Component<
                     value=""
                     id="flexCheck-all"
                     checked={this.state.chekAll}
+                    data-testid={`check-category-all`}
                     onClick={this.toggleAll}
                     onChange={this.toggleAll}
                   />
