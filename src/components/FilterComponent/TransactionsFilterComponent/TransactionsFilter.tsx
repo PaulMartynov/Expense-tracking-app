@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import "../Filter.css";
 
+const ONE_MONTH = 30 * 24 * 3600000;
+
 interface FilterProps {
   viewCountFn: (count: number) => Promise<void>;
   viewByDateFn: (from: number, to: number) => Promise<void>;
@@ -21,7 +23,7 @@ export default class TransactionsFilter extends React.Component<
     super(props);
     const date = new Date();
     const fromDate = new Date();
-    fromDate.setTime(fromDate.getTime() - 30 * 24 * 3600000);
+    fromDate.setTime(fromDate.getTime() - ONE_MONTH);
     this.state = {
       dateTo: `${date.getFullYear()}-${`0${date.getMonth() + 1}`.slice(
         -2

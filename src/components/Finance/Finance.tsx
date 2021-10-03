@@ -63,7 +63,7 @@ class Finance extends React.Component<
   viewLastNTransactions = async (count: number): Promise<void> => {
     if (this.props.userId) {
       try {
-        await this.props.getLastNUserTransactions({
+        this.props.getLastNUserTransactions({
           userId: this.props.userId,
           n: count,
         });
