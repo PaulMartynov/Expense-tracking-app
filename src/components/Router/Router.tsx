@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import { AnyAction, bindActionCreators, Dispatch } from "@reduxjs/toolkit";
-import { store } from "../../store/store";
 import Login from "../Login/Login";
 import MainContent from "../MainContent/MainContent";
 import loginRequired from "./LoginRequire";
@@ -11,8 +10,9 @@ import Finance from "../Finance/Finance";
 import { onAuthChangeThunk } from "../../store/authReducer";
 import Categories from "../Categories/Categories";
 import Register from "../Login/Register";
+import { ReturnState } from "../ThunkTypes";
 
-const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
+const mapStateToProps = (state: ReturnState) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
