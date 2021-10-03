@@ -9,4 +9,4 @@ export default {
 
 const Template: Story = () => <About />;
 
-export const collapseBlock = Template;
+export const about = Template;
