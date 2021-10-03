@@ -188,7 +188,7 @@ export default class EditTransactionPopup extends React.Component<
   render(): JSX.Element {
     return (
       <Modal
-        title={"Добавить новую операцию"}
+        title={"Изменить данные"}
         active={this.props.active}
         setActive={this.props.setActive}
         children={
