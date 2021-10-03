@@ -1,4 +1,5 @@
 import { Action, ThunkAction } from "@reduxjs/toolkit";
+import { store } from "../store/store";
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -12,3 +13,5 @@ export type ThunkProps<
 > = {
   [K in keyof T]: (...args: Parameters<T[K]>) => void;
 };
+
+export type ReturnState = ReturnType<typeof store.getState>;

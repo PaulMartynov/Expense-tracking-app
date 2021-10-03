@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Col, Row } from "react-bootstrap";
-import { store } from "../../store/store";
 import { getAllCategories } from "../../store/categoryReducer";
 import {
   deleteUserTransaction,
@@ -11,14 +10,14 @@ import {
   saveTransaction,
   updateUserTransaction,
 } from "../../store/transactionsReducer";
-import { ThunkProps } from "../ThunkTypes";
+import { ReturnState, ThunkProps } from "../ThunkTypes";
 import { sortTransactionsBy } from "../FilterComponent/Sort";
 import TransactionsFilter from "../FilterComponent/TransactionsFilterComponent/TransactionsFilter";
 import PyeChart from "./Charts/PyeChart";
 import ColumnChart from "./Charts/ColumnChart";
 import CategoryFilter from "../FilterComponent/CategoryFilterComponent/CategoryFilter";
 
-const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
+const mapStateToProps = (state: ReturnState) => ({
   userId: state.auth.userId,
   categoryList: state.category.categoryList,
   categoriesIsLoaded: state.category.isLoaded,

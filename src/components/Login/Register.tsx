@@ -2,16 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
-import { store } from "../../store/store";
 import { registerByEmailAndPassword } from "../../store/authReducer";
-import { ThunkProps } from "../ThunkTypes";
+import { ReturnState, ThunkProps } from "../ThunkTypes";
 import "./Login.css";
 
 const mapDispatchToProps = {
   registerByEmailAndPassword,
 };
 
-const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
+const mapStateToProps = (state: ReturnState) => ({
   auth: state.auth,
 });
 

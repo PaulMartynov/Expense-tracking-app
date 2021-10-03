@@ -1,15 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
-import { store } from "../../store/store";
 import { getAllCategories, saveCategories } from "../../store/categoryReducer";
-import { ThunkProps } from "../ThunkTypes";
+import { ReturnState, ThunkProps } from "../ThunkTypes";
 import NewCategoryPopup from "./CategoryPopup/NewCategoryPopup";
 import CategoryCard from "./CategoryCard/CategoryCard";
 import "./Categories.css";
 import CategoryFilter from "../FilterComponent/CategoryFilterComponent/CategoryFilter";
 
-const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
+const mapStateToProps = (state: ReturnState) => ({
   userId: state.auth.userId,
   categoryList: state.category.categoryList,
   isLoaded: state.category.isLoaded,

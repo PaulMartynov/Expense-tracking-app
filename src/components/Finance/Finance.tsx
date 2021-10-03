@@ -2,7 +2,6 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
 import { Button, Container } from "react-bootstrap";
-import { store } from "../../store/store";
 import { getAllCategories } from "../../store/categoryReducer";
 import {
   deleteUserTransaction,
@@ -12,7 +11,7 @@ import {
   saveTransaction,
   updateUserTransaction,
 } from "../../store/transactionsReducer";
-import { ThunkProps } from "../ThunkTypes";
+import { ReturnState, ThunkProps } from "../ThunkTypes";
 import "./Finance.css";
 import NewTransactionPopup from "./FinancePopup/NewTransactionPopup";
 import TransactionCard from "./TransactionCard/TransactionCard";
@@ -20,7 +19,7 @@ import TransactionsFilter from "../FilterComponent/TransactionsFilterComponent/T
 import { sortTransactionsBy } from "../FilterComponent/Sort";
 import CategoryFilter from "../FilterComponent/CategoryFilterComponent/CategoryFilter";
 
-const mapStateToProps = (state: ReturnType<typeof store.getState>) => ({
+const mapStateToProps = (state: ReturnState) => ({
   userId: state.auth.userId,
   categoryList: state.category.categoryList,
   categoriesIsLoaded: state.category.isLoaded,
@@ -64,7 +63,7 @@ class Finance extends React.Component<
   viewLastNTransactions = async (count: number): Promise<void> => {
     if (this.props.userId) {
       try {
-        await this.props.getLastNUserTransactions({
+        this.props.getLastNUserTransactions({
           userId: this.props.userId,
           n: count,
         });

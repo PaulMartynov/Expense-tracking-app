@@ -1,7 +1,9 @@
 const STORAGE_KEY = process.env.LOCAL_STORAGE_KEY as string;
 
 export function saveData(data: (string | null | undefined)[]): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  if (data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
 }
 
 export function loadData(): string[] {

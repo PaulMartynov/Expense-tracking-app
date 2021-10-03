@@ -2,7 +2,7 @@ import React from "react";
 import "./catCard.css";
 import EditCategoryPopup from "../CategoryPopup/EditCategoryPopup";
 
-interface CategoryCardProps {
+export interface CategoryCardProps {
   id: number;
   category: ExpCategory;
   saveFn: (id: number, category: ExpCategory) => Promise<void>;

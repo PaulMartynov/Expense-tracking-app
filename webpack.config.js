@@ -1,10 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require("path");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpack = require("webpack");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const Dotenv = require("dotenv-webpack");
 
 module.exports = (env) => {
@@ -12,10 +8,6 @@ module.exports = (env) => {
     new HtmlWebpackPlugin({
       template: "public/index.html",
       inject: "body",
-    }),
-    new Dotenv({
-      safe: true,
-      path: path.resolve(__dirname, ".env"),
     }),
   ];
   const babelLoaderOptions = {
@@ -44,6 +36,13 @@ module.exports = (env) => {
         ),
       })
     );
+  } else {
+    plugins.push(
+      new Dotenv({
+        safe: true,
+        path: path.resolve(__dirname, ".env"),
+      })
+    );
   }
   return {
     entry: "./src/index.tsx",
@@ -56,6 +55,7 @@ module.exports = (env) => {
       environment: {
         arrowFunction: false,
       },
+      clean: true,
     },
     plugins,
     module: {
