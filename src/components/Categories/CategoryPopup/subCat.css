@@ -5,3 +5,21 @@
 .cat-name {
   font-size: 1.1em !important;
 }
+.btn-del {
+  font: 1.1em/1em Tahoma, Verdana, sans-serif;
+  text-transform: uppercase;
+  margin-left: 0.5em;
+}
+.sub-ch-cat {
+  border-radius: 6px;
+  width: fit-content;
+  display: inline-block;
+  margin: 5px;
+  background: lightgray;
+}
+.sub-ch-cat label {
+  padding-left: 0.5em;
+}
+.card-body-input {
+  padding: 0 2em 1em 0;
+}
