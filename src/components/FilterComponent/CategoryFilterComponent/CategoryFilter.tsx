@@ -164,11 +164,11 @@ export default class CategoryFilter extends React.Component<
             <label htmlFor="categorySearch" className="col-sm-2 col-form-label">
               Поиск:
             </label>
-            <div className="col-sm-10 col-filter-date-2">
+            <div className="col-sm-10">
               <input
                 type="text"
                 data-testid={`categorySearchInput`}
-                className="form-control"
+                className="form-control col-filter-input"
                 id="categorySearch"
                 value={this.state.filterValue}
                 onChange={this.onFilterChange}
@@ -177,7 +177,6 @@ export default class CategoryFilter extends React.Component<
             </div>
           </div>
         </Col>
-        <Col />
       </Row>
     );
   }
