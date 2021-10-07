@@ -1,12 +1,21 @@
 .operation-date {
-  max-width: 10vw !important;
-}
-.operation-time {
-  max-width: 7vw !important;
+  display: inline-block;
+  max-width: fit-content !important;
+  margin-left: 0.5em;
 }
 .operation-amount {
-  max-width: 25vw !important;
+  max-width: 50%;
+  margin-bottom: 1em;
+}
+.operation-category {
+  max-width: 50%;
 }
 .operation-type {
   margin-top: 0.3em !important;
+}
+.row-label {
+  max-width: 20% !important;
+}
+.modal-body .description-input {
+  max-width: 70%;
 }

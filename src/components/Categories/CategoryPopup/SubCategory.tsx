@@ -70,7 +70,7 @@ export default class SubCategory extends React.Component<
           </div>
         </div>
         <div className="card-body">
-          <div className="input-group mb-3">
+          <div className="input-group mb-3 card-body-input">
             <input
               type="text"
               className="form-control form-control-sm"
@@ -82,27 +82,29 @@ export default class SubCategory extends React.Component<
               onChange={this.onChangeName}
             />
             <Button
-              className="btn btn-sm"
+              className="btn"
               type="button"
               id="button-subCategory-btn"
               data-testid={"sub-card-add-btn"}
               onClick={this.addCategory}
             >
-              Добавить
+              +
             </Button>
           </div>
           {this.state.childrens.map((value, index) => (
             <React.Fragment key={`sub-ch-cat-${index}`}>
-              <label>{value}</label>
-              <Button
-                className={"btn-danger btn-sm"}
-                data-testid={`ch-del-btn-${index}`}
-                onClick={() => {
-                  this.deleteCategory(index);
-                }}
-              >
-                Удалить
-              </Button>
+              <div className={"sub-ch-cat"}>
+                <label>{value}</label>
+                <Button
+                  className={"btn-danger btn-sm btn-del"}
+                  data-testid={`ch-del-btn-${index}`}
+                  onClick={() => {
+                    this.deleteCategory(index);
+                  }}
+                >
+                  ×
+                </Button>
+              </div>
             </React.Fragment>
           ))}
         </div>

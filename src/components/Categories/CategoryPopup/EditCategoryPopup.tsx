@@ -129,7 +129,7 @@ export default class EditCategoryPopup extends React.Component<
                       data-testid={"modal-subcategory-input"}
                     />
                     <Button
-                      className="btn btn-sm"
+                      className="btn"
                       type="button"
                       id="button-subCategory-btn"
                       onClick={this.addSubCategory}

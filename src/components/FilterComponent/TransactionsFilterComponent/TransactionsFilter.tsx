@@ -116,78 +116,81 @@ export default class TransactionsFilter extends React.Component<
       <>
         <Row>
           <Col className={"col-filter-date"}>
-            <div className="form-group row">
-              <label
-                htmlFor="operation-date"
-                className="col-sm-2 col-form-label"
-              >
-                От:
-              </label>
-              <div className="col-sm-10 filter-date">
-                <input
-                  type="date"
-                  data-testid={`filter-date-from`}
-                  className="form-control"
-                  id="filter-date-from"
-                  value={this.state.dateFrom}
-                  onChange={this.onDateChange}
-                />
+            <div className={"col-filter-date-inputs"}>
+              <div className="form-group row">
+                <label
+                  htmlFor="operation-date"
+                  className="col-sm-2 col-form-label"
+                >
+                  От:
+                </label>
+                <div className="col-sm-10 filter-date">
+                  <input
+                    type="date"
+                    data-testid={`filter-date-from`}
+                    className="form-control"
+                    id="filter-date-from"
+                    value={this.state.dateFrom}
+                    onChange={this.onDateChange}
+                  />
+                </div>
+                <div className="col-sm-10 filter-date">
+                  <input
+                    type="time"
+                    id="filter-time-from"
+                    data-testid={`filter-time-from`}
+                    className="form-control"
+                    value={this.state.timeFrom}
+                    onChange={this.onTimeChange}
+                    required
+                  />
+                </div>
               </div>
-              <div className="col-sm-10 filter-time">
-                <input
-                  type="time"
-                  id="filter-time-from"
-                  data-testid={`filter-time-from`}
-                  className="form-control"
-                  value={this.state.timeFrom}
-                  onChange={this.onTimeChange}
-                  required
-                />
+              <div className="form-group row">
+                <label
+                  htmlFor="filter-date-to"
+                  className="col-sm-2 col-form-label"
+                >
+                  До:
+                </label>
+                <div className="col-sm-10 filter-date">
+                  <input
+                    type="date"
+                    className="form-control"
+                    data-testid={`filter-date-to`}
+                    id="filter-date-to"
+                    value={this.state.dateTo}
+                    onChange={this.onDateChange}
+                  />
+                </div>
+                <div className="col-sm-10 filter-date">
+                  <input
+                    type="time"
+                    id="filter-time-to"
+                    data-testid={`filter-time-to`}
+                    className="form-control"
+                    value={this.state.timeTo}
+                    onChange={this.onTimeChange}
+                    required
+                  />
+                </div>
               </div>
             </div>
-          </Col>
-          <Col className={"col-filter-date"}>
-            <div className="form-group row">
-              <label
-                htmlFor="filter-date-to"
-                className="col-sm-2 col-form-label"
-              >
-                До:
-              </label>
-              <div className="col-sm-10 filter-date">
-                <input
-                  type="date"
-                  className="form-control"
-                  data-testid={`filter-date-to`}
-                  id="filter-date-to"
-                  value={this.state.dateTo}
-                  onChange={this.onDateChange}
-                />
-              </div>
-              <div className="col-sm-10 filter-time">
-                <input
-                  type="time"
-                  id="filter-time-to"
-                  data-testid={`filter-time-to`}
-                  className="form-control"
-                  value={this.state.timeTo}
-                  onChange={this.onTimeChange}
-                  required
-                />
-              </div>
+            <div className={"filter-date-btn"}>
+              <Button data-testid={`filter-date-btn`} onClick={this.viewByDate}>
+                Показать
+              </Button>
             </div>
           </Col>
-          <Col className={"filter-date"} onClick={this.viewByDate}>
-            <Button data-testid={`filter-date-btn`}>Показать</Button>
-          </Col>
-          <Col>
+          <Col className={"filter-count-box"}>
             <div className="form-group row">
               <label htmlFor="filter-count" className="col-sm-2 col-form-label">
                 Количество:
               </label>
               <div className="col-sm-10 filter-count">
                 <input
-                  type="text"
+                  type="number"
+                  step={1}
                   id={"filter-count"}
                   data-testid={`filter-count-input`}
                   value={this.state.count}
@@ -196,17 +199,15 @@ export default class TransactionsFilter extends React.Component<
                   required={true}
                 />
               </div>
+              <Button
+                className="btn btn-primary btn-filter-count"
+                data-testid={`filter-count-btn`}
+                type="button"
+                onClick={this.viewCount}
+              >
+                Показать
+              </Button>
             </div>
-          </Col>
-          <Col className={"filter-date"}>
-            <Button
-              className="btn btn-primary btn-filter-count"
-              data-testid={`filter-count-btn`}
-              type="button"
-              onClick={this.viewCount}
-            >
-              Показать
-            </Button>
           </Col>
         </Row>
       </>
