@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import Modal from "../../ModalComponent/Modal";
 import "./TransactionsPopup.css";
 
@@ -194,179 +194,200 @@ export default class EditTransactionPopup extends React.Component<
         children={
           <>
             <div className="modal-body" data-testid={`modal-transaction-body`}>
-              <div className="form-group row">
-                <label
-                  htmlFor="operation-description"
-                  className="col-sm-2 col-form-label"
-                >
-                  Описание:
-                </label>
-                <div className="col-sm-10">
+              <Row>
+                <Col className={"row-label"}>
+                  <label
+                    htmlFor="operation-description"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Описание:
+                  </label>
+                </Col>
+                <Col>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-control description-input"
                     id={"operation-description"}
                     value={this.state.description}
                     onChange={this.onDescriptionChange}
                     data-testid={`modal-transaction-description-input`}
                     placeholder={"Добавьте описание"}
                   />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="operation-date"
-                  className="col-sm-2 col-form-label"
-                >
-                  Дата:
-                </label>
-                <div className="col-sm-10 operation-date">
-                  <input
-                    type="date"
-                    className="form-control"
-                    id="operation-date"
-                    data-testid={`modal-transaction-date`}
-                    value={this.state.date.toString()}
-                    onChange={this.onDateChange}
-                  />
-                </div>
-                <label
-                  htmlFor="operation-time"
-                  className="col-sm-2 col-form-label"
-                >
-                  Время:
-                </label>
-                <div className="col-sm-10 operation-time">
-                  <input
-                    type="time"
-                    id="operation-time"
-                    className="form-control"
-                    data-testid={`modal-transaction-time`}
-                    value={this.state.time}
-                    onChange={this.onTimeChange}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="operation-amount"
-                  className="col-sm-2 col-form-label"
-                >
-                  Сумма:
-                </label>
-                <div className="col-sm-10 operation-amount">
-                  <input
-                    type="number"
-                    className="form-control"
-                    id={"operation-amount"}
-                    data-testid={`modal-transaction-amount`}
-                    value={this.state.amount}
-                    step={0.01}
-                    min={0}
-                    onChange={this.changeAmount}
-                  />
-                </div>
-              </div>
-              <div className="form-group row operation-type">
-                <label className="col-sm-2 col-form-label">Тип:</label>
-                <div className="col-sm-10">
-                  <div
-                    className="btn-group"
-                    role="group"
-                    aria-label="Basic radio toggle button group"
+                </Col>
+              </Row>
+              <Row>
+                <Col className={"row-label"}>
+                  <label
+                    htmlFor="operation-date"
+                    className="col-sm-2 col-form-label"
                   >
+                    Дата:
+                  </label>
+                </Col>
+                <Col>
+                  <div className="col-sm-10 operation-date">
                     <input
-                      type="radio"
-                      className="btn-check"
-                      name="btnradio"
-                      id="btnradio1"
-                      autoComplete="off"
-                      data-testid={`modal-transaction-expense`}
-                      checked={this.state.expense}
-                      onChange={this.onTypeChange}
+                      type="date"
+                      className="form-control"
+                      id="operation-date"
+                      data-testid={`modal-transaction-date`}
+                      value={this.state.date.toString()}
+                      onChange={this.onDateChange}
                     />
-                    <label
-                      className="btn btn-outline-primary"
-                      htmlFor="btnradio1"
-                    >
-                      Расход
-                    </label>
-                    <input
-                      type="radio"
-                      className="btn-check"
-                      name="btnradio"
-                      id="btnradio2"
-                      autoComplete="off"
-                      data-testid={`modal-transaction-income`}
-                      checked={this.state.income}
-                      onChange={this.onTypeChange}
-                    />
-                    <label
-                      className="btn btn-outline-primary"
-                      htmlFor="btnradio2"
-                    >
-                      Зачисление
-                    </label>
                   </div>
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="category-select"
-                  className="col-sm-2 col-form-label"
-                >
-                  Категория:
-                </label>
-                <div className="col-sm-10 operation-amount operation-type">
-                  <select
-                    className="form-control"
-                    id="category-select"
-                    data-testid={`modal-transaction-select-cat`}
-                    onChange={this.onChangeOption}
+                  <div className="col-sm-10 operation-date">
+                    <input
+                      type="time"
+                      id="operation-time"
+                      className="form-control"
+                      data-testid={`modal-transaction-time`}
+                      value={this.state.time}
+                      onChange={this.onTimeChange}
+                      required
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col className={"row-label"}>
+                  <label
+                    htmlFor="operation-amount"
+                    className="col-sm-2 col-form-label"
                   >
-                    {this.getCategories()}
-                  </select>
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="category-select"
-                  className="col-sm-2 col-form-label"
-                >
-                  Подкатегория:
-                </label>
-                <div className="col-sm-10 operation-amount operation-type">
-                  <select
-                    className="form-control"
-                    id="category-select"
-                    data-testid={`modal-transaction-select-sub-cat`}
-                    onChange={this.onChangeSubCategory}
+                    Сумма:
+                  </label>
+                </Col>
+                <Col>
+                  <div className="col-sm-10 operation-amount">
+                    <input
+                      type="number"
+                      className="form-control"
+                      id={"operation-amount"}
+                      data-testid={`modal-transaction-amount`}
+                      value={this.state.amount}
+                      step={0.01}
+                      min={0}
+                      onChange={this.changeAmount}
+                      required={true}
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col className={"row-label"}>
+                  <label className="col-sm-2 col-form-label">Тип:</label>
+                </Col>
+                <Col>
+                  <div className="col-sm-10">
+                    <div
+                      className="btn-group"
+                      role="group"
+                      aria-label="Basic radio toggle button group"
+                    >
+                      <input
+                        type="radio"
+                        className="btn-check"
+                        name="btnradio"
+                        id="btnradio1"
+                        autoComplete="off"
+                        data-testid={`modal-transaction-expense`}
+                        checked={this.state.expense}
+                        onChange={this.onTypeChange}
+                      />
+                      <label
+                        className="btn btn-outline-primary"
+                        htmlFor="btnradio1"
+                      >
+                        Расход
+                      </label>
+                      <input
+                        type="radio"
+                        className="btn-check"
+                        name="btnradio"
+                        id="btnradio2"
+                        data-testid={`modal-transaction-income`}
+                        autoComplete="off"
+                        checked={this.state.income}
+                        onChange={this.onTypeChange}
+                      />
+                      <label
+                        className="btn btn-outline-primary"
+                        htmlFor="btnradio2"
+                      >
+                        Зачисление
+                      </label>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col className={"row-label"}>
+                  <label
+                    htmlFor="category-select"
+                    className="col-sm-2 col-form-label"
                   >
-                    <option key={`sub-category-option-no-option`} />
-                    {this.getSubCategories()}
-                  </select>
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="category-select"
-                  className="col-sm-2 col-form-label"
-                >
-                  Подкатегория-2:
-                </label>
-                <div className="col-sm-10 operation-amount operation-type">
-                  <select
-                    className="form-control"
-                    id="category-select"
-                    data-testid={`modal-transaction-select-sub-child`}
-                    onChange={this.onChangeChild}
+                    Категория:
+                  </label>
+                </Col>
+                <Col>
+                  <div className="col-sm-10 operation-type operation-category">
+                    <select
+                      className="form-control"
+                      id="category-select"
+                      data-testid={`modal-transaction-select-cat`}
+                      onChange={this.onChangeOption}
+                    >
+                      {this.getCategories()}
+                    </select>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col className={"row-label"}>
+                  <label
+                    htmlFor="category-select"
+                    className="col-sm-2 col-form-label"
                   >
-                    <option key={`sub-child-category-option-no-option`} />
-                    {this.getSubCategoryChildrens()}
-                  </select>
-                </div>
-              </div>
+                    Подкатегория:
+                  </label>
+                </Col>
+                <Col>
+                  <div className="col-sm-10 operation-type operation-category">
+                    <select
+                      className="form-control"
+                      id="category-select"
+                      data-testid={`modal-transaction-select-sub-cat`}
+                      onChange={this.onChangeSubCategory}
+                    >
+                      <option key={`sub-category-option-no-option`} />
+                      {this.getSubCategories()}
+                    </select>
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col className={"row-label"}>
+                  <label
+                    htmlFor="category-select"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Подкатегория-2:
+                  </label>
+                </Col>
+                <Col>
+                  <div className="col-sm-10 operation-type operation-category">
+                    <select
+                      className="form-control"
+                      id="category-select"
+                      data-testid={`modal-transaction-select-sub-child`}
+                      onChange={this.onChangeChild}
+                    >
+                      <option key={`sub-child-category-option-no-option`} />
+                      {this.getSubCategoryChildrens()}
+                    </select>
+                  </div>
+                </Col>
+              </Row>
             </div>
             <div className="modal-footer">
               <Button
